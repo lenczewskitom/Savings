@@ -1,7 +1,7 @@
 package com.kodilla.savings.controller;
 
 import com.kodilla.savings.domain.CurrencyBalance;
-import com.kodilla.savings.domain.CurrencyRequest;
+import com.kodilla.savings.domain.CurrencyTransaction;
 import com.kodilla.savings.domain.dto.nbp.RatesDto;
 import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.service.DbService;
@@ -29,7 +29,7 @@ public class CurrencyController {
     }
 
     @GetMapping(value = "/transactions")
-    public List<CurrencyRequest> getAllTransactions() {
+    public List<CurrencyTransaction> getAllTransactions() {
         return dbService.getAllCurrencyTransactions();
     }
 

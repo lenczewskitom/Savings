@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-public class CurrencyRequest {
+public class CurrencyTransaction {
 
-    public CurrencyRequest(long transactionId, BigDecimal transactionAccountValue, Currency currencyCode, BigDecimal transactionCurrencyValue) {
+    public CurrencyTransaction(long transactionId, BigDecimal transactionAccountValue, Currency currencyCode, BigDecimal transactionCurrencyValue) {
         this.transactionId = transactionId;
         this.transactionDate = LocalDate.now();
         this.transactionAccountValue = transactionAccountValue;

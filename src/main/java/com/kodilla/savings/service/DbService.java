@@ -1,10 +1,12 @@
 package com.kodilla.savings.service;
 
+import com.kodilla.savings.client.CoinApiClient;
 import com.kodilla.savings.client.NbpApiClient;
 import com.kodilla.savings.domain.*;
 import com.kodilla.savings.domain.dto.nbp.RatesDto;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Currency;
+import com.kodilla.savings.domain.coinapi.CoinApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,8 @@ import java.util.List;
 public class DbService {
 
     private List<AccountRequest> accountRequests = new ArrayList<>();
-    private List<CurrencyRequest> currencyRequests = new ArrayList<>();
-    private List<CryptoCurrencyRequest> cryptoCurrencyRequests = new ArrayList<>();
+    private List<CurrencyTransaction> currencyTransactions = new ArrayList<>();
+    private List<CryptoTransaction> cryptoTransactions = new ArrayList<>();
     private AccountBalance accountBalance = new AccountBalance();
     private CurrencyBalance currencyBalanceUSD = new CurrencyBalance();
     private CurrencyBalance currencyBalanceEUR = new CurrencyBalance();
@@ -27,13 +29,14 @@ public class DbService {
     private CurrencyBalance currencyBalanceCHF = new CurrencyBalance();
     private CurrencyBalance currencyBalanceCNY = new CurrencyBalance();
 
-    private CryptoCurrencyBalance cryptocurrencyBalanceBTC = new CryptoCurrencyBalance();
-    private CryptoCurrencyBalance cryptocurrencyBalanceETH = new CryptoCurrencyBalance();
-    private CryptoCurrencyBalance cryptocurrencyBalanceLTC = new CryptoCurrencyBalance();
-    private CryptoCurrencyBalance cryptocurrencyBalanceSOL = new CryptoCurrencyBalance();
-    private CryptoCurrencyBalance cryptocurrencyBalanceDOGE = new CryptoCurrencyBalance();
+    private CryptoBalance cryptocurrencyBalanceBTC = new CryptoBalance();
+    private CryptoBalance cryptocurrencyBalanceETH = new CryptoBalance();
+    private CryptoBalance cryptocurrencyBalanceLTC = new CryptoBalance();
+    private CryptoBalance cryptocurrencyBalanceSOL = new CryptoBalance();
+    private CryptoBalance cryptocurrencyBalanceDOGE = new CryptoBalance();
 
     private final NbpApiClient nbpApiClient;
+    private final CoinApiClient coinApiResponseDto;
 
 
     public List<AccountRequest> getAllAccountDeposits() {
@@ -62,7 +65,7 @@ public class DbService {
     }
 
     public void buyCurrency(BigDecimal accountValue, Currency currencyCode, BigDecimal currencyValue) {
-        currencyRequests.add(new CurrencyRequest(1L, accountValue.setScale(2, RoundingMode.CEILING), currencyCode, currencyValue));
+        currencyTransactions.add(new CurrencyTransaction(1L, accountValue.setScale(2, RoundingMode.CEILING), currencyCode, currencyValue));
         addPayment(accountValue);
         switch (currencyCode) {
             case EUR -> currencyBalanceEUR.updateBalance(currencyValue, currencyCode);
@@ -75,7 +78,7 @@ public class DbService {
 
     public void sellCurrency(BigDecimal accountValue, Currency currencyCode, BigDecimal currencyValue) {
         currencyValue = currencyValue.negate();
-        currencyRequests.add(new CurrencyRequest(2L, accountValue.setScale(2, RoundingMode.CEILING), currencyCode, currencyValue));
+        currencyTransactions.add(new CurrencyTransaction(2L, accountValue.setScale(2, RoundingMode.CEILING), currencyCode, currencyValue));
         switch (currencyCode) {
             case EUR -> currencyBalanceEUR.updateBalance(currencyValue, currencyCode);
             case USD -> currencyBalanceUSD.updateBalance(currencyValue, currencyCode);
@@ -85,8 +88,8 @@ public class DbService {
         }
         addDeposit(accountValue);
     }
-    public List<CurrencyRequest> getAllCurrencyTransactions() {
-        return currencyRequests;
+    public List<CurrencyTransaction> getAllCurrencyTransactions() {
+        return currencyTransactions;
     }
 
     public CurrencyBalance getCurrencyBalance(Currency currencyCode) {
@@ -100,20 +103,20 @@ public class DbService {
         return currencyBalance;
     }
 
-    public List<CryptoCurrencyRequest> getAllCryptoCurrencyTransactions() {
-        return cryptoCurrencyRequests;
+    public List<CryptoTransaction> getAllCryptoCurrencyTransactions() {
+        return cryptoTransactions;
     }
 
-    public void getCryptoRates(CryptoCurrency cryptoCurrencyCode) {
-
+    public CoinApiResponseDto getCryptoRates(CryptoCurrency cryptoCurrencyCode) {
+        return coinApiResponseDto.getCryptocurrencyRates(cryptoCurrencyCode);
     }
 
     public void buyCryptocurrency(BigDecimal accountValue, CryptoCurrency cryptocurrencyCode, BigDecimal cryptocurrencyValue) {
-        cryptoCurrencyRequests.add(new CryptoCurrencyRequest(1L, accountValue.setScale(2, RoundingMode.CEILING), cryptocurrencyCode, cryptocurrencyValue));
+        cryptoTransactions.add(new CryptoTransaction(1L, accountValue.setScale(2, RoundingMode.CEILING), cryptocurrencyCode, cryptocurrencyValue));
         addPayment(accountValue);
         switch (cryptocurrencyCode) {
             case BTC -> cryptocurrencyBalanceBTC.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
-            case ETH -> cryptocurrencyBalanceETH.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
+            case ETC -> cryptocurrencyBalanceETH.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
             case LTC -> cryptocurrencyBalanceLTC.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
             case SOL -> cryptocurrencyBalanceSOL.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
             case DOGE -> cryptocurrencyBalanceDOGE.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
@@ -122,20 +125,21 @@ public class DbService {
 
     public void sellCryptocurrency(BigDecimal accountValue, CryptoCurrency cryptocurrencyCode, BigDecimal cryptocurrencyValue) {
         cryptocurrencyValue = cryptocurrencyValue.negate();
-        cryptoCurrencyRequests.add(new CryptoCurrencyRequest(2L, accountValue.setScale(2, RoundingMode.CEILING),cryptocurrencyCode, cryptocurrencyValue));
+        cryptoTransactions.add(new CryptoTransaction(2L, accountValue.setScale(2, RoundingMode.CEILING),cryptocurrencyCode, cryptocurrencyValue));
         switch (cryptocurrencyCode) {
             case BTC -> cryptocurrencyBalanceBTC.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
-            case ETH -> cryptocurrencyBalanceETH.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
+            case ETC -> cryptocurrencyBalanceETH.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
             case LTC -> cryptocurrencyBalanceLTC.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
             case SOL -> cryptocurrencyBalanceSOL.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
             case DOGE -> cryptocurrencyBalanceDOGE.updateBalance(cryptocurrencyValue, cryptocurrencyCode);
         }
+        addDeposit(accountValue);
     }
 
-    public CryptoCurrencyBalance getCryptocurrencyBalance(CryptoCurrency cryptocurrencyCode) {
-        CryptoCurrencyBalance cryptocurrencyBalance = switch (cryptocurrencyCode) {
+    public CryptoBalance getCryptocurrencyBalance(CryptoCurrency cryptocurrencyCode) {
+        CryptoBalance cryptocurrencyBalance = switch (cryptocurrencyCode) {
             case BTC -> cryptocurrencyBalanceBTC;
-            case ETH -> cryptocurrencyBalanceETH;
+            case ETC -> cryptocurrencyBalanceETH;
             case LTC -> cryptocurrencyBalanceLTC;
             case SOL -> cryptocurrencyBalanceSOL;
             case DOGE -> cryptocurrencyBalanceDOGE;

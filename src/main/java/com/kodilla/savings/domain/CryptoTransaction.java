@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-public class CryptoCurrencyRequest {
+public class CryptoTransaction {
 
-    public CryptoCurrencyRequest(long transactionId, BigDecimal transactionAccountValue, CryptoCurrency cryptocurrencyCode, BigDecimal transactionCryptocurrencyValue) {
+    public CryptoTransaction(long transactionId, BigDecimal transactionAccountValue, CryptoCurrency cryptocurrencyCode, BigDecimal transactionCryptocurrencyValue) {
         this.transactionId = transactionId;
         this.transactionDate = LocalDate.now();
         this.transactionAccountValue = transactionAccountValue;

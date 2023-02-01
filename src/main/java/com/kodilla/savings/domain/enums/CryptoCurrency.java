@@ -3,7 +3,7 @@ package com.kodilla.savings.domain.enums;
 public enum CryptoCurrency {
 
     BTC,
-    ETH,
+    ETC,
     LTC,
     SOL,
     DOGE
