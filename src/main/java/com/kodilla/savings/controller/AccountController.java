@@ -1,7 +1,7 @@
 package com.kodilla.savings.controller;
 
 import com.kodilla.savings.domain.AccountBalance;
-import com.kodilla.savings.domain.AccountRequest;
+import com.kodilla.savings.domain.AccountDeposit;
 import com.kodilla.savings.service.DbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,8 @@ public class AccountController {
     private final DbService dbService;
 
     @GetMapping(value = "/deposits")
-    public List<AccountRequest> getAccountDeposits() {
-        List<AccountRequest> accountRequests = dbService.getAllAccountDeposits();
+    public List<AccountDeposit> getAccountDeposits() {
+        List<AccountDeposit> accountRequests = dbService.getAllAccountDeposits();
         return accountRequests;
     }
 

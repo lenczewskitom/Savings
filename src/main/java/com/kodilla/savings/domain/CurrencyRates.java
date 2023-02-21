@@ -15,16 +15,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class CurrencyBalance {
+public class CurrencyRates {
+
     @Id
     @GeneratedValue
     @NotNull
-    private long currencyBalanceId;
-    private BigDecimal balance = new BigDecimal(0);
+    private long currencyRateId;
+    private BigDecimal rate;
+    private BigDecimal lastRate;
+    private BigDecimal rateChange;
     private Currency currencyCode;
-
-    public void updateBalance(BigDecimal value, Currency currencyCode) {
-        setBalance(balance.add(value));
-        setCurrencyCode(currencyCode);
-    }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DbService {
 
-    private List<AccountRequest> accountRequests = new ArrayList<>();
+    private List<AccountDeposit> accountRequests = new ArrayList<>();
     private List<CurrencyTransaction> currencyTransactions = new ArrayList<>();
     private List<CryptoTransaction> cryptoTransactions = new ArrayList<>();
     private AccountBalance accountBalance = new AccountBalance();
@@ -39,18 +39,18 @@ public class DbService {
     private final CoinApiClient coinApiResponseDto;
 
 
-    public List<AccountRequest> getAllAccountDeposits() {
+    public List<AccountDeposit> getAllAccountDeposits() {
         return accountRequests;
     }
 
     public void addDeposit(BigDecimal value) {
-        accountRequests.add(new AccountRequest(1L, value.setScale(2, RoundingMode.CEILING)));
+        accountRequests.add(new AccountDeposit(1L, value.setScale(2, RoundingMode.CEILING)));
         accountBalance.updateBalance(value);
     }
 
     public void addPayment(BigDecimal value) {
         value = value.negate();
-        accountRequests.add(new AccountRequest(2L, value.setScale(2, RoundingMode.CEILING)));
+        accountRequests.add(new AccountDeposit(2L, value.setScale(2, RoundingMode.CEILING)));
         accountBalance.updateBalance(value);
     }
 

@@ -1,6 +1,6 @@
 package com.kodilla.savings.domain;
 
-import com.kodilla.savings.domain.enums.Currency;
+import com.kodilla.savings.domain.enums.CryptoCurrency;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,16 +15,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class CurrencyBalance {
+public class CryptoRates {
+
     @Id
     @GeneratedValue
     @NotNull
-    private long currencyBalanceId;
-    private BigDecimal balance = new BigDecimal(0);
-    private Currency currencyCode;
-
-    public void updateBalance(BigDecimal value, Currency currencyCode) {
-        setBalance(balance.add(value));
-        setCurrencyCode(currencyCode);
-    }
+    private long cryptoRateId;
+    private BigDecimal rate;
+    private BigDecimal lastRate;
+    private BigDecimal rateChange;
+    private CryptoCurrency cryptocurrencyCode;
 }
