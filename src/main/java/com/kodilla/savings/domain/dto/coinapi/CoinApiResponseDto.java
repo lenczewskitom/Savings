@@ -1,4 +1,4 @@
-package com.kodilla.savings.domain.coinapi;
+package com.kodilla.savings.domain.dto.coinapi;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

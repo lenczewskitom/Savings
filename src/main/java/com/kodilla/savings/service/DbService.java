@@ -6,7 +6,7 @@ import com.kodilla.savings.domain.*;
 import com.kodilla.savings.domain.dto.nbp.RatesDto;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Currency;
-import com.kodilla.savings.domain.coinapi.CoinApiResponseDto;
+import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

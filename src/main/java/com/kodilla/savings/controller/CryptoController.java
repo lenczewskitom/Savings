@@ -2,7 +2,7 @@ package com.kodilla.savings.controller;
 
 import com.kodilla.savings.domain.CryptoTransaction;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
-import com.kodilla.savings.domain.coinapi.CoinApiResponseDto;
+import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
 import com.kodilla.savings.service.DbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
