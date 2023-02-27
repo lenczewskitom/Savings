@@ -1,5 +1,6 @@
 package com.kodilla.savings.service;
 
+import com.kodilla.savings.domain.CryptoBalance;
 import com.kodilla.savings.domain.CryptoRates;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.repository.CryptoRatesRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,46 +28,59 @@ public class CryptoRatesDbService {
         BigDecimal btcLastRate = cryptoRatesRepository.getLastCryptoRate(CryptoCurrency.BTC.name()).getLastRate();
         BigDecimal btcRate = coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate();
         CryptoRates btc = new CryptoRates(
-                btcLastRate,
-                ((btcRate.subtract(btcLastRate)).divide(btcLastRate).multiply(BigDecimal.valueOf(100))),
+                btcRate,
+                ((btcRate.subtract(btcLastRate)).divide(btcLastRate, 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100))),
                 CryptoCurrency.BTC
         );
 
         BigDecimal etcLastRate = cryptoRatesRepository.getLastCryptoRate(CryptoCurrency.ETC.name()).getLastRate();
         BigDecimal etcRate = coinApiDbService.getCryptoRates(CryptoCurrency.ETC).getRate();
         CryptoRates etc = new CryptoRates(
-                etcLastRate,
-                ((etcRate.subtract(etcLastRate)).divide(btcLastRate).multiply(BigDecimal.valueOf(100))),
+                etcRate,
+                ((etcRate.subtract(etcLastRate)).divide(btcLastRate, 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100))),
                 CryptoCurrency.ETC
         );
 
         BigDecimal ltcLastRate = cryptoRatesRepository.getLastCryptoRate(CryptoCurrency.LTC.name()).getLastRate();
         BigDecimal ltcRate = coinApiDbService.getCryptoRates(CryptoCurrency.LTC).getRate();
         CryptoRates ltc = new CryptoRates(
-                ltcLastRate,
-                ((ltcRate.subtract(ltcLastRate)).divide(ltcLastRate).multiply(BigDecimal.valueOf(100))),
+                ltcRate,
+                ((ltcRate.subtract(ltcLastRate)).divide(ltcLastRate, 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100))),
                 CryptoCurrency.LTC
         );
 
         BigDecimal solLastRate = cryptoRatesRepository.getLastCryptoRate(CryptoCurrency.SOL.name()).getLastRate();
         BigDecimal solRate = coinApiDbService.getCryptoRates(CryptoCurrency.SOL).getRate();
         CryptoRates sol = new CryptoRates(
-                solLastRate,
-                ((solRate.subtract(solLastRate)).divide(solLastRate).multiply(BigDecimal.valueOf(100))),
+                solRate,
+                ((solRate.subtract(solLastRate)).divide(solLastRate, 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100))),
                 CryptoCurrency.SOL
         );
 
         BigDecimal dogeLastRate = cryptoRatesRepository.getLastCryptoRate(CryptoCurrency.DOGE.name()).getLastRate();
         BigDecimal dogeRate = coinApiDbService.getCryptoRates(CryptoCurrency.DOGE).getRate();
         CryptoRates doge = new CryptoRates(
-                dogeLastRate,
-                ((dogeRate.subtract(dogeLastRate)).divide(dogeLastRate).multiply(BigDecimal.valueOf(100))),
+                dogeRate,
+                ((dogeRate.subtract(dogeLastRate)).divide(dogeLastRate, 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100))),
                 CryptoCurrency.DOGE
         );
         cryptoRatesRepository.save(btc);
         cryptoRatesRepository.save(etc);
         cryptoRatesRepository.save(ltc);
         cryptoRatesRepository.save(sol);
+        cryptoRatesRepository.save(doge);
+    }
+
+    public void addData() {
+        CryptoRates btc = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.BTC);
+        CryptoRates etc = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.ETC);
+        CryptoRates sol = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.SOL);
+        CryptoRates ltc = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.LTC);
+        CryptoRates doge = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.DOGE);
+        cryptoRatesRepository.save(btc);
+        cryptoRatesRepository.save(etc);
+        cryptoRatesRepository.save(sol);
+        cryptoRatesRepository.save(ltc);
         cryptoRatesRepository.save(doge);
     }
 }
