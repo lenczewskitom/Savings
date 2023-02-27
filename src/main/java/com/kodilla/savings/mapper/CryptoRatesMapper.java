@@ -10,7 +10,6 @@ public class CryptoRatesMapper {
     public CryptoRates mapToCryptoRates(final CryptoRatesDto cryptoRatesDto) {
         return new CryptoRates(
                 cryptoRatesDto.getCryptoRateId(),
-                cryptoRatesDto.getRate(),
                 cryptoRatesDto.getLastRate(),
                 cryptoRatesDto.getRateChange(),
                 cryptoRatesDto.getCryptocurrencyCode()
