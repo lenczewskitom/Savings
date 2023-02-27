@@ -3,7 +3,6 @@ package com.kodilla.savings.domain.dto;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

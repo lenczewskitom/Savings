@@ -5,12 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+@NamedQuery(
+        name = "CurrencyTransaction.reverseCurrencyTransactionsList",
+        query = "FROM CurrencyTransaction ORDER BY transactionId DESC"
+)
 
 @Data
 @AllArgsConstructor
@@ -18,8 +21,7 @@ import java.time.LocalDate;
 @Entity
 public class CurrencyTransaction {
 
-    public CurrencyTransaction(long transactionId, BigDecimal transactionAccountValue, Currency currencyCode, BigDecimal transactionCurrencyValue) {
-        this.transactionId = transactionId;
+    public CurrencyTransaction(BigDecimal transactionAccountValue, Currency currencyCode, BigDecimal transactionCurrencyValue) {
         this.transactionDate = LocalDate.now();
         this.transactionAccountValue = transactionAccountValue;
         this.transactionCurrencyValue = transactionCurrencyValue;
@@ -32,6 +34,7 @@ public class CurrencyTransaction {
     private long transactionId;
     private LocalDate transactionDate;
     private BigDecimal transactionAccountValue;
+    @Enumerated(EnumType.STRING)
     private Currency currencyCode;
     private BigDecimal transactionCurrencyValue;
 

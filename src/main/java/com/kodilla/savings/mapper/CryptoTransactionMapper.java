@@ -25,8 +25,8 @@ public class CryptoTransactionMapper {
                 cryptoTransaction.getTransactionId(),
                 cryptoTransaction.getTransactionDate(),
                 cryptoTransaction.getTransactionAccountValue(),
-                cryptoTransaction.getCryptocurrencyCode(),
-                cryptoTransaction.getTransactionCryptocurrencyValue()
+                cryptoTransaction.getCryptoCurrencyCode(),
+                cryptoTransaction.getTransactionCryptoValue()
         );
     }
 

@@ -1,9 +1,14 @@
 package com.kodilla.savings.controller;
 
+import com.kodilla.savings.domain.CryptoBalance;
 import com.kodilla.savings.domain.CryptoTransaction;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
-import com.kodilla.savings.service.DbService;
+import com.kodilla.savings.service.AccountBalanceDbService;
+import com.kodilla.savings.service.AccountDepositDbService;
+import com.kodilla.savings.service.CryptoBalanceDbService;
+import com.kodilla.savings.service.CryptoTransactionDbService;
+import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,28 +20,48 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CryptoController {
 
-    private final DbService dbService;
+    private final CryptoBalanceDbService cryptoBalanceDbService;
+    private final CryptoTransactionDbService cryptoTransactionDbService;
+    private final AccountBalanceDbService accountBalanceDbService;
+    private final AccountDepositDbService accountDepositDbService;
+    private final CoinApiDbService coinApiDbService;
 
     @GetMapping(value = "/rate/{cryptoCurrencyCode}")
     public CoinApiResponseDto getRate(@PathVariable CryptoCurrency cryptoCurrencyCode) {
 
-        return dbService.getCryptoRates(cryptoCurrencyCode);
+        return coinApiDbService.getCryptoRates(cryptoCurrencyCode);
+    }
+
+    @GetMapping(value = "/data")
+    public String addData() {
+        String str = "Ok";
+        cryptoBalanceDbService.addData();
+        return str;
+    }
+
+    @GetMapping(value = "/balance/{cryptoCurrencyCode}")
+    public CryptoBalance getCryptoBalance(@PathVariable CryptoCurrency cryptoCurrencyCode) {
+        return cryptoBalanceDbService.getCryptoBalance(cryptoCurrencyCode);
     }
 
     @GetMapping(value = "/transactions")
     public List<CryptoTransaction> getAllTransactions() {
-        return dbService.getAllCryptoCurrencyTransactions();
+
+        return cryptoTransactionDbService.getAllTransactions();
     }
 
     @PostMapping(value = "/buy")
     public void buyCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
                             @RequestParam BigDecimal cryptocurrencyValue) {
-        dbService.buyCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
+        cryptoTransactionDbService.buyCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
+        cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue);
+        accountBalanceDbService.updateAccountBalance(accountValue.negate());
+        accountDepositDbService.addDeposit(accountValue.negate());
     }
 
     @PostMapping(value = "/sell")
     public void sellCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
                                    @RequestParam BigDecimal cryptocurrencyValue) {
-        dbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
+        //dbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
     }
 }

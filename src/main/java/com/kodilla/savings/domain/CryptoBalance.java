@@ -4,12 +4,20 @@ import com.kodilla.savings.domain.enums.CryptoCurrency;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NamedNativeQuery;
+import org.hibernate.annotations.NamedQuery;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+
+
+@NamedNativeQuery(
+        name = "CryptoBalance.getCryptoBalance",
+        query = "select * from crypto_balance WHERE cryptocurrency_Code = :CODE" +
+                " ORDER BY crypto_Balance_Id DESC LIMIT 1",
+        resultClass = CryptoBalance.class
+)
 
 @Data
 @AllArgsConstructor
@@ -17,15 +25,17 @@ import java.math.BigDecimal;
 @Entity
 public class CryptoBalance {
 
+    public CryptoBalance(BigDecimal balance, CryptoCurrency cryptocurrencyCode) {
+        this.balance = balance;
+        this.cryptocurrencyCode = cryptocurrencyCode;
+    }
+
     @Id
     @GeneratedValue
     @NotNull
     private long cryptoBalanceId;
-    private BigDecimal balance = new BigDecimal(0);
+    private BigDecimal balance;
+    @Enumerated(EnumType.STRING)
     private CryptoCurrency cryptocurrencyCode;
 
-    public void updateBalance(BigDecimal value, CryptoCurrency cryptocurrencyCode) {
-        setBalance(balance.add(value));
-        setCryptocurrencyCode(cryptocurrencyCode);
-    }
 }

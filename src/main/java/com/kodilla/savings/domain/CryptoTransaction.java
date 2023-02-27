@@ -4,13 +4,18 @@ import com.kodilla.savings.domain.enums.CryptoCurrency;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NamedNativeQuery;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+
+@NamedQuery(
+        name = "CryptoTransaction.reverseCryptoTransactionsList",
+        query = "FROM CryptoTransaction ORDER BY transactionId DESC"
+)
 
 @Data
 @AllArgsConstructor
@@ -18,12 +23,11 @@ import java.time.LocalDate;
 @Entity
 public class CryptoTransaction {
 
-    public CryptoTransaction(long transactionId, BigDecimal transactionAccountValue, CryptoCurrency cryptocurrencyCode, BigDecimal transactionCryptocurrencyValue) {
-        this.transactionId = transactionId;
+    public CryptoTransaction(BigDecimal transactionAccountValue, CryptoCurrency cryptoCurrencyCode, BigDecimal transactionCryptoValue) {
         this.transactionDate = LocalDate.now();
         this.transactionAccountValue = transactionAccountValue;
-        this.cryptocurrencyCode = cryptocurrencyCode;
-        this.transactionCryptocurrencyValue = transactionCryptocurrencyValue;
+        this.cryptoCurrencyCode = cryptoCurrencyCode;
+        this.transactionCryptoValue = transactionCryptoValue;
     }
 
     @Id
@@ -32,6 +36,7 @@ public class CryptoTransaction {
     private long transactionId;
     private LocalDate transactionDate;
     private BigDecimal transactionAccountValue;
-    private CryptoCurrency cryptocurrencyCode;
-    private BigDecimal transactionCryptocurrencyValue;
+    @Enumerated(EnumType.STRING)
+    private CryptoCurrency cryptoCurrencyCode;
+    private BigDecimal transactionCryptoValue;
 }
