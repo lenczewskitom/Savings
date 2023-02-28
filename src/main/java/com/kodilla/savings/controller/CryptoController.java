@@ -50,10 +50,15 @@ public class CryptoController {
         return cryptoTransactionDbService.getAllTransactions();
     }
 
+    @GetMapping(value = "/all")
+    public BigDecimal getAllSavings() {
+        return cryptoBalanceDbService.getAllSavings();
+    }
+
     @PostMapping(value = "/buy")
     public void buyCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
                             @RequestParam BigDecimal cryptocurrencyValue) {
-        cryptoTransactionDbService.buyCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
+        cryptoTransactionDbService.buyCryptocurrency(accountValue.negate(), cryptoCurrencyCode, cryptocurrencyValue);
         cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue);
         accountBalanceDbService.updateAccountBalance(accountValue.negate());
         accountDepositDbService.addDeposit(accountValue.negate());
@@ -62,6 +67,9 @@ public class CryptoController {
     @PostMapping(value = "/sell")
     public void sellCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
                                    @RequestParam BigDecimal cryptocurrencyValue) {
-        //dbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
+        cryptoTransactionDbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue.negate());
+        cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue.negate());
+        accountBalanceDbService.updateAccountBalance(accountValue);
+        accountDepositDbService.addDeposit(accountValue);
     }
 }

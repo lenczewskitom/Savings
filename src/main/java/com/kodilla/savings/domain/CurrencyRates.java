@@ -39,6 +39,11 @@ public class CurrencyRates {
         this.currencyCode = currencyCode;
     }
 
+    public CurrencyRates(BigDecimal lastRate, Currency currencyCode) {
+        this.lastRate = lastRate;
+        this.currencyCode = currencyCode;
+    }
+
     @Id
     @GeneratedValue
     @NotNull

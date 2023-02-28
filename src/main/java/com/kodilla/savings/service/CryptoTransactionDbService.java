@@ -25,4 +25,10 @@ public class CryptoTransactionDbService {
         CryptoTransaction cryptoTransaction = new CryptoTransaction(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
         cryptoTransactionRepository.save(cryptoTransaction);
     }
+
+    public void sellCryptocurrency(BigDecimal accountValue, CryptoCurrency cryptoCurrencyCode,
+                                  BigDecimal cryptocurrencyValue) {
+        CryptoTransaction cryptoTransaction = new CryptoTransaction(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
+        cryptoTransactionRepository.save(cryptoTransaction);
+    }
 }

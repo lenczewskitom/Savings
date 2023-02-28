@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +22,16 @@ public class CurrencyRatesDbService {
 
     public List<CurrencyRates> getTopCurrencyRates() {
         return currencyRatesRepository.getLastCurrencyRatesList();
+    }
+
+    public List<CurrencyRates> getAllCurrencyRates() {
+        List<CurrencyRates> currencyRatesList = new ArrayList<>();
+        currencyRatesList.add(new CurrencyRates(nbpApiDbService.getRates(Currency.EUR).getRate(), Currency.EUR));
+        currencyRatesList.add(new CurrencyRates(nbpApiDbService.getRates(Currency.USD).getRate(), Currency.USD));
+        currencyRatesList.add(new CurrencyRates(nbpApiDbService.getRates(Currency.GBP).getRate(), Currency.GBP));
+        currencyRatesList.add(new CurrencyRates(nbpApiDbService.getRates(Currency.CHF).getRate(), Currency.CHF));
+        currencyRatesList.add(new CurrencyRates(nbpApiDbService.getRates(Currency.CNY).getRate(), Currency.CNY));
+        return currencyRatesList;
     }
 
     public void updateCurrencyRates() {

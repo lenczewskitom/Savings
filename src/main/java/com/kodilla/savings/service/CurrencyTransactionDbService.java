@@ -25,4 +25,10 @@ public class CurrencyTransactionDbService {
         CurrencyTransaction currencyTransaction = new CurrencyTransaction(accountValue, currencyCode, currencyValue);
         currencyTransactionRepository.save(currencyTransaction);
     }
+
+    public void sellCurrency(BigDecimal accountValue, Currency currencyCode,
+                            BigDecimal currencyValue) {
+        CurrencyTransaction currencyTransaction = new CurrencyTransaction(accountValue, currencyCode, currencyValue);
+        currencyTransactionRepository.save(currencyTransaction);
+    }
 }
