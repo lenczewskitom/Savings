@@ -10,7 +10,6 @@ public class CurrencyRatesMapper {
     public CurrencyRates mapToCurrencyRates(final CurrencyRatesDto currencyRatesDto) {
         return new CurrencyRates(
                 currencyRatesDto.getCurrencyRateId(),
-                currencyRatesDto.getRate(),
                 currencyRatesDto.getLastRate(),
                 currencyRatesDto.getRateChange(),
                 currencyRatesDto.getCurrencyCode()
@@ -20,7 +19,7 @@ public class CurrencyRatesMapper {
     public CurrencyRatesDto mapToCurrencyRatesDto(final CurrencyRates currencyRates) {
         return new CurrencyRatesDto(
                 currencyRates.getCurrencyRateId(),
-                currencyRates.getRate(),
+                currencyRates.getLastRate(),
                 currencyRates.getLastRate(),
                 currencyRates.getRateChange(),
                 currencyRates.getCurrencyCode()

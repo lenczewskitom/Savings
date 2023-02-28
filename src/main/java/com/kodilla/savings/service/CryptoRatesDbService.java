@@ -72,11 +72,11 @@ public class CryptoRatesDbService {
     }
 
     public void addData() {
-        CryptoRates btc = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.BTC);
-        CryptoRates etc = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.ETC);
-        CryptoRates sol = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.SOL);
-        CryptoRates ltc = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.LTC);
-        CryptoRates doge = new CryptoRates(BigDecimal.ONE, BigDecimal.ZERO, CryptoCurrency.DOGE);
+        CryptoRates btc = new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate(), BigDecimal.ZERO, CryptoCurrency.BTC);
+        CryptoRates etc = new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.ETC).getRate(), BigDecimal.ZERO, CryptoCurrency.ETC);
+        CryptoRates sol = new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.SOL).getRate(), BigDecimal.ZERO, CryptoCurrency.SOL);
+        CryptoRates ltc = new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.LTC).getRate(), BigDecimal.ZERO, CryptoCurrency.LTC);
+        CryptoRates doge = new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.DOGE).getRate(), BigDecimal.ZERO, CryptoCurrency.DOGE);
         cryptoRatesRepository.save(btc);
         cryptoRatesRepository.save(etc);
         cryptoRatesRepository.save(sol);

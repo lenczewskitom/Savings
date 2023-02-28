@@ -14,7 +14,7 @@ public interface CryptoRatesRepository extends CrudRepository<CryptoRates, Long>
     @Query(nativeQuery = true)
     CryptoRates getLastCryptoRate(@Param("CODE")String cryptoCurrencyCode);
 
-    @Query
+    @Query(nativeQuery = true)
     List<CryptoRates> getLastCryptoRatesList();
 
     @Override
