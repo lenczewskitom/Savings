@@ -7,6 +7,7 @@ import org.hibernate.annotations.NamedNativeQuery;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class AccountDeposit {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long depositId;
     private LocalDate depositDate;

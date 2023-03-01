@@ -3,7 +3,6 @@ package com.kodilla.savings.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.Entity;
