@@ -2,7 +2,9 @@ package com.kodilla.savings.service;
 
 import com.kodilla.savings.domain.CryptoBalance;
 import com.kodilla.savings.domain.CryptoRates;
+import com.kodilla.savings.domain.CurrencyRates;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
+import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.repository.CryptoRatesRepository;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,16 @@ public class CryptoRatesDbService {
 
     public List<CryptoRates> getTopCryptoRates() {
         return cryptoRatesRepository.getLastCryptoRatesList();
+    }
+
+    public List<CryptoRates> getAllCryptoRates() {
+        List<CryptoRates> cryptoRatesList = new ArrayList<>();
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate(), CryptoCurrency.BTC));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.ETC).getRate(), CryptoCurrency.ETC));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.LTC).getRate(), CryptoCurrency.LTC));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.SOL).getRate(), CryptoCurrency.SOL));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.DOGE).getRate(), CryptoCurrency.DOGE));
+        return cryptoRatesList;
     }
 
     public void updateCryptoRates() {

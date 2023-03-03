@@ -20,7 +20,7 @@ public class CurrencyOrderScheduler {
     private final AccountDepositDbService accountDepositDbService;
     private final AccountBalanceDbService accountBalanceDbService;
 
-    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void checkCurrencyOrders() {
         checkBuyCurrencyOrders();
         checkSellCurrencyOrders();
@@ -39,7 +39,7 @@ public class CurrencyOrderScheduler {
                     currencyBalanceDbService.updateCurrencyBalance(order.getCurrencyCode(), order.getOrderCurrencyValue());
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
                     accountDepositDbService.addDeposit(accountValue.negate());
-                    order.setActiveOrder(false);
+                    currencyOrderDbService.deleteCurrencyOrder(order.getCurrencyOrderId());
                 }
             }
         }
@@ -58,7 +58,7 @@ public class CurrencyOrderScheduler {
                     currencyBalanceDbService.updateCurrencyBalance(order.getCurrencyCode(), order.getOrderCurrencyValue().negate());
                     accountBalanceDbService.updateAccountBalance(accountValue);
                     accountDepositDbService.addDeposit(accountValue);
-                    order.setActiveOrder(false);
+                    currencyOrderDbService.deleteCurrencyOrder(order.getCurrencyOrderId());
                 }
             }
         }

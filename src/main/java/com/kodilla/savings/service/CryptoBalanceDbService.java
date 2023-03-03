@@ -1,6 +1,7 @@
 package com.kodilla.savings.service;
 
 import com.kodilla.savings.domain.CryptoBalance;
+import com.kodilla.savings.domain.CurrencyBalance;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.repository.CryptoBalanceRepository;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +36,16 @@ public class CryptoBalanceDbService {
 
     public CryptoBalance getCryptoBalance(CryptoCurrency cryptoCurrencyCode) {
         return cryptoBalanceRepository.getCryptoBalance(cryptoCurrencyCode.name());
+    }
+
+    public List<CryptoBalance> getAllCuryptoBalanceList() {
+        List<CryptoBalance> cryptoBalanceList = new ArrayList<>();
+        cryptoBalanceList.add(cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.BTC.name()));
+        cryptoBalanceList.add(cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.ETC.name()));
+        cryptoBalanceList.add(cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.LTC.name()));
+        cryptoBalanceList.add(cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.SOL.name()));
+        cryptoBalanceList.add(cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.DOGE.name()));
+        return cryptoBalanceList;
     }
 
     public void updateCryptoBalance(CryptoCurrency cryptoCurrencyCode, BigDecimal cryptocurrencyValue) {

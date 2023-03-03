@@ -1,13 +1,9 @@
 package com.kodilla.savings.controller;
 
-import com.kodilla.savings.domain.CryptoBalance;
-import com.kodilla.savings.domain.CryptoTransaction;
+import com.kodilla.savings.domain.*;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
-import com.kodilla.savings.service.AccountBalanceDbService;
-import com.kodilla.savings.service.AccountDepositDbService;
-import com.kodilla.savings.service.CryptoBalanceDbService;
-import com.kodilla.savings.service.CryptoTransactionDbService;
+import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +20,7 @@ public class CryptoController {
     private final CryptoTransactionDbService cryptoTransactionDbService;
     private final AccountBalanceDbService accountBalanceDbService;
     private final AccountDepositDbService accountDepositDbService;
+    private final CryptoRatesDbService cryptoRatesDbService;
     private final CoinApiDbService coinApiDbService;
 
     @GetMapping(value = "/rate/{cryptoCurrencyCode}")
@@ -42,6 +39,16 @@ public class CryptoController {
     @GetMapping(value = "/balance/{cryptoCurrencyCode}")
     public CryptoBalance getCryptoBalance(@PathVariable CryptoCurrency cryptoCurrencyCode) {
         return cryptoBalanceDbService.getCryptoBalance(cryptoCurrencyCode);
+    }
+
+    @GetMapping(value = "/balanceList")
+    public List<CryptoBalance> getBalance() {
+        return cryptoBalanceDbService.getAllCuryptoBalanceList();
+    }
+
+    @GetMapping(value = "/ratesList")
+    public List<CryptoRates> getAllCurrencyRates() {
+        return cryptoRatesDbService.getAllCryptoRates();
     }
 
     @GetMapping(value = "/transactions")

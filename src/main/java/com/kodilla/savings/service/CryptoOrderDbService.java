@@ -1,11 +1,15 @@
 package com.kodilla.savings.service;
 
 import com.kodilla.savings.domain.CryptoOrder;
+import com.kodilla.savings.domain.enums.CryptoCurrency;
+import com.kodilla.savings.domain.enums.Order;
 import com.kodilla.savings.repository.CryptoOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -13,8 +17,33 @@ public class CryptoOrderDbService {
 
     private final CryptoOrderRepository cryptoOrderRepository;
 
-    public void addCryptoOrder(CryptoOrder cryptoOrder) {
-        cryptoOrderRepository.save(cryptoOrder);
+    public void addCryptoOrder(BigDecimal cryptoValue, CryptoCurrency cryptoCode,
+                               BigDecimal cryptoRate, Order operationType) {
+        cryptoOrderRepository.save(new CryptoOrder(cryptoValue, cryptoCode, cryptoRate, operationType));
+    }
+
+    public void deleteCryptoOrder(Long id) {
+        cryptoOrderRepository.deleteById(id);
+    }
+
+    public List<CryptoOrder> getAllCryptoOrders() {return cryptoOrderRepository.findAll();}
+
+    public BigDecimal getAllOrdersAccountValue() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (CryptoOrder order: cryptoOrderRepository.getBuyCryptoOrders()) {
+            sum = sum.add(order.getOrderCryptoValue().multiply(order.getCryptoRate()));
+        }
+        return sum;
+    }
+
+    public BigDecimal getAllOrdersCryptoValue(CryptoCurrency cryptoCode) {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (CryptoOrder order: cryptoOrderRepository.getSellCryptoOrders().stream()
+                .filter(order -> order.getCryptoCode() == cryptoCode)
+                .collect(Collectors.toList())) {
+            sum = sum.add(order.getOrderCryptoValue());
+        }
+        return sum;
     }
 
     public List<CryptoOrder> getBuyCryptoOrders() {

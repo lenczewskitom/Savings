@@ -35,6 +35,11 @@ public class CryptoRates {
         this.cryptocurrencyCode = cryptocurrencyCode;
     }
 
+    public CryptoRates(BigDecimal lastRate, CryptoCurrency cryptocurrencyCode) {
+        this.lastRate = lastRate;
+        this.cryptocurrencyCode = cryptocurrencyCode;
+    }
+
     @Id
     @GeneratedValue
     @NotNull

@@ -14,12 +14,12 @@ import org.hibernate.annotations.NamedQuery;
 
 @NamedQuery(
         name = "CurrencyOrder.getBuyCurrencyOrders",
-        query = "FROM CurrencyOrder WHERE isActiveOrder = true AND operationType = 'BUY'"
+        query = "FROM CurrencyOrder WHERE operationType = 'BUY'"
 )
 
 @NamedQuery(
         name = "CurrencyOrder.getSellCurrencyOrders",
-        query = "FROM CurrencyOrder WHERE isActiveOrder = true AND operationType = 'SELL'"
+        query = "FROM CurrencyOrder WHERE operationType = 'SELL'"
 )
 
 
@@ -29,8 +29,16 @@ import org.hibernate.annotations.NamedQuery;
 @Entity
 public class CurrencyOrder {
 
+    public CurrencyOrder(BigDecimal orderCurrencyValue, Currency currencyCode, BigDecimal currencyRate, Order operationType) {
+        this.currencyOrderDate = LocalDate.now();
+        this.orderCurrencyValue = orderCurrencyValue;
+        this.currencyCode = currencyCode;
+        this.currencyRate = currencyRate;
+        this.operationType = operationType;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @NotNull
     private long currencyOrderId;
     private LocalDate currencyOrderDate;
@@ -40,5 +48,4 @@ public class CurrencyOrder {
     private BigDecimal currencyRate;
     @Enumerated(EnumType.STRING)
     private Order operationType;
-    private boolean isActiveOrder;
 }

@@ -32,7 +32,7 @@ public class AccountDeposit {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @NotNull
     private long depositId;
     private LocalDate depositDate;

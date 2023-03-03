@@ -1,6 +1,7 @@
 package com.kodilla.savings.repository;
 
 import com.kodilla.savings.domain.CryptoOrder;
+import com.kodilla.savings.domain.CurrencyOrder;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,6 @@ public interface CryptoOrderRepository extends CrudRepository<CryptoOrder, Long>
 
     @Query
     List<CryptoOrder> getSellCryptoOrders();
+
+    List<CryptoOrder> findAll();
 }

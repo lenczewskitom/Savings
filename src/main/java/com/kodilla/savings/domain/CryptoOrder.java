@@ -13,12 +13,12 @@ import java.time.LocalDate;
 
 @NamedQuery(
         name = "CryptoOrder.getBuyCryptoOrders",
-        query = "FROM CryptoOrder WHERE isActiveOrder = true AND operationType = 'BUY'"
+        query = "FROM CryptoOrder WHERE operationType = 'BUY'"
 )
 
 @NamedQuery(
         name = "CryptoOrder.getSellCryptoOrders",
-        query = "FROM CryptoOrder WHERE isActiveOrder = true AND operationType = 'SELL'"
+        query = "FROM CryptoOrder WHERE operationType = 'SELL'"
 )
 
 @Data
@@ -27,8 +27,16 @@ import java.time.LocalDate;
 @Entity
 public class CryptoOrder {
 
+    public CryptoOrder(BigDecimal orderCryptoValue, CryptoCurrency cryptoCode, BigDecimal cryptoRate, Order operationType) {
+        this.cryptoOrderDate = LocalDate.now();
+        this.orderCryptoValue = orderCryptoValue;
+        this.cryptoCode = cryptoCode;
+        this.cryptoRate = cryptoRate;
+        this.operationType = operationType;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @NotNull
     private long cryptoOrderId;
     private LocalDate cryptoOrderDate;
@@ -38,5 +46,4 @@ public class CryptoOrder {
     private BigDecimal cryptoRate;
     @Enumerated(EnumType.STRING)
     private Order operationType;
-    private boolean isActiveOrder;
 }

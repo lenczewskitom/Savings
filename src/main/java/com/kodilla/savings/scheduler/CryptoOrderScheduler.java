@@ -20,7 +20,7 @@ public class CryptoOrderScheduler {
     private final AccountDepositDbService accountDepositDbService;
     private final AccountBalanceDbService accountBalanceDbService;
 
-    @Scheduled(cron = "0 0 */3 * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void checkCryptoOrders() {
         checkBuyCryptoOrders();
         checkSellCryptoOrders();
@@ -39,7 +39,7 @@ public class CryptoOrderScheduler {
                     cryptoBalanceDbService.updateCryptoBalance(order.getCryptoCode(), order.getOrderCryptoValue());
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
                     accountDepositDbService.addDeposit(accountValue.negate());
-                    order.setActiveOrder(false);
+                    cryptoOrderDbService.deleteCryptoOrder(order.getCryptoOrderId());
                 }
             }
         }
@@ -58,7 +58,7 @@ public class CryptoOrderScheduler {
                     cryptoBalanceDbService.updateCryptoBalance(order.getCryptoCode(), order.getOrderCryptoValue().negate());
                     accountBalanceDbService.updateAccountBalance(accountValue);
                     accountDepositDbService.addDeposit(accountValue);
-                    order.setActiveOrder(false);
+                    cryptoOrderDbService.deleteCryptoOrder(order.getCryptoOrderId());
                 }
             }
         }

@@ -17,4 +17,6 @@ public interface CurrencyOrderRepository extends CrudRepository<CurrencyOrder, L
 
     @Query
     List<CurrencyOrder> getSellCurrencyOrders();
+
+    List<CurrencyOrder> findAll();
 }
