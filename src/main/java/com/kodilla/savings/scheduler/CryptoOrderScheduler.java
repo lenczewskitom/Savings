@@ -1,6 +1,7 @@
 package com.kodilla.savings.scheduler;
 
 import com.kodilla.savings.domain.CryptoOrder;
+import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class CryptoOrderScheduler {
                     );
                     cryptoBalanceDbService.updateCryptoBalance(order.getCryptoCode(), order.getOrderCryptoValue());
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
-                    accountDepositDbService.addDeposit(accountValue.negate());
+                    accountDepositDbService.addDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
                     cryptoOrderDbService.deleteCryptoOrder(order.getCryptoOrderId());
                 }
             }
@@ -57,7 +58,7 @@ public class CryptoOrderScheduler {
                     );
                     cryptoBalanceDbService.updateCryptoBalance(order.getCryptoCode(), order.getOrderCryptoValue().negate());
                     accountBalanceDbService.updateAccountBalance(accountValue);
-                    accountDepositDbService.addDeposit(accountValue);
+                    accountDepositDbService.addDeposit(accountValue, DepositType.CRYPTOCURRENCY);
                     cryptoOrderDbService.deleteCryptoOrder(order.getCryptoOrderId());
                 }
             }

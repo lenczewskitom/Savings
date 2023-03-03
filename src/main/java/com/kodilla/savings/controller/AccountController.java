@@ -2,6 +2,7 @@ package com.kodilla.savings.controller;
 
 import com.kodilla.savings.domain.AccountBalance;
 import com.kodilla.savings.domain.AccountDeposit;
+import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.mapper.AccountDepositMapper;
 import com.kodilla.savings.service.AccountBalanceDbService;
 import com.kodilla.savings.service.AccountDepositDbService;
@@ -33,7 +34,7 @@ public class AccountController {
 
     @PostMapping()
     public void addDeposit(@RequestParam BigDecimal deposit) {
-        accountDepositDbService.addDeposit(deposit);
+        accountDepositDbService.addDeposit(deposit, DepositType.ACCOUNT);
         accountBalanceDbService.updateAccountBalance(deposit);
     }
 }

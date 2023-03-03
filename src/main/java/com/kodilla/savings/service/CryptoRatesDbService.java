@@ -29,11 +29,11 @@ public class CryptoRatesDbService {
 
     public List<CryptoRates> getAllCryptoRates() {
         List<CryptoRates> cryptoRatesList = new ArrayList<>();
-        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate(), CryptoCurrency.BTC));
-        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.ETC).getRate(), CryptoCurrency.ETC));
-        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.LTC).getRate(), CryptoCurrency.LTC));
-        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.SOL).getRate(), CryptoCurrency.SOL));
-        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.DOGE).getRate(), CryptoCurrency.DOGE));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.BTC));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.ETC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.ETC));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.LTC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.LTC));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.SOL).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.SOL));
+        cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.DOGE).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.DOGE));
         return cryptoRatesList;
     }
 

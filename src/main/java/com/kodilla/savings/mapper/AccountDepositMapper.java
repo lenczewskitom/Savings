@@ -13,14 +13,16 @@ public class AccountDepositMapper {
         return new AccountDeposit(
                 accountDepositDto.getDepositId(),
                 accountDepositDto.getDepositDate(),
-                accountDepositDto.getDepositValue()
+                accountDepositDto.getDepositValue(),
+                accountDepositDto.getDepositType()
         );
     }
     public AccountDepositDto mapToAccountDepositDto(final AccountDeposit accountDeposit) {
         return new AccountDepositDto(
                 accountDeposit.getDepositId(),
                 accountDeposit.getDepositDate(),
-                accountDeposit.getDepositValue()
+                accountDeposit.getDepositValue(),
+                accountDeposit.getDepositType()
         );
     }
     public List<AccountDepositDto> mapToAccountDepositDtoList(final List<AccountDeposit> accountDepositList) {

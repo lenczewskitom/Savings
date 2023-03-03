@@ -1,6 +1,7 @@
 package com.kodilla.savings.service;
 
 import com.kodilla.savings.domain.AccountDeposit;
+import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.repository.AccountDepositRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class AccountDepositDbService {
         return accountDepositRepository.reverseDepositsList();
     }
 
-    public void addDeposit(BigDecimal deposit) {
-        AccountDeposit accountDeposit = new AccountDeposit(deposit);
+    public void addDeposit(BigDecimal deposit, DepositType depositType) {
+        AccountDeposit accountDeposit = new AccountDeposit(deposit, depositType);
         accountDepositRepository.save(accountDeposit);
     }
 }

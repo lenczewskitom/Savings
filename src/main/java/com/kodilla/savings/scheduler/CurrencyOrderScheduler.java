@@ -1,6 +1,7 @@
 package com.kodilla.savings.scheduler;
 
 import com.kodilla.savings.domain.CurrencyOrder;
+import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.NbpApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class CurrencyOrderScheduler {
                     );
                     currencyBalanceDbService.updateCurrencyBalance(order.getCurrencyCode(), order.getOrderCurrencyValue());
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
-                    accountDepositDbService.addDeposit(accountValue.negate());
+                    accountDepositDbService.addDeposit(accountValue.negate(), DepositType.CURRENCY);
                     currencyOrderDbService.deleteCurrencyOrder(order.getCurrencyOrderId());
                 }
             }
@@ -57,7 +58,7 @@ public class CurrencyOrderScheduler {
                     );
                     currencyBalanceDbService.updateCurrencyBalance(order.getCurrencyCode(), order.getOrderCurrencyValue().negate());
                     accountBalanceDbService.updateAccountBalance(accountValue);
-                    accountDepositDbService.addDeposit(accountValue);
+                    accountDepositDbService.addDeposit(accountValue, DepositType.CURRENCY);
                     currencyOrderDbService.deleteCurrencyOrder(order.getCurrencyOrderId());
                 }
             }

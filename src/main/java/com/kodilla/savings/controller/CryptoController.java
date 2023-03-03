@@ -3,6 +3,7 @@ package com.kodilla.savings.controller;
 import com.kodilla.savings.domain.*;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
+import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +69,7 @@ public class CryptoController {
         cryptoTransactionDbService.buyCryptocurrency(accountValue.negate(), cryptoCurrencyCode, cryptocurrencyValue);
         cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue);
         accountBalanceDbService.updateAccountBalance(accountValue.negate());
-        accountDepositDbService.addDeposit(accountValue.negate());
+        accountDepositDbService.addDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
     }
 
     @PostMapping(value = "/sell")
@@ -77,6 +78,6 @@ public class CryptoController {
         cryptoTransactionDbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue.negate());
         cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue.negate());
         accountBalanceDbService.updateAccountBalance(accountValue);
-        accountDepositDbService.addDeposit(accountValue);
+        accountDepositDbService.addDeposit(accountValue, DepositType.CRYPTOCURRENCY);
     }
 }

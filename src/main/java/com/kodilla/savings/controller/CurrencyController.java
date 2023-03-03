@@ -5,6 +5,7 @@ import com.kodilla.savings.domain.CurrencyRates;
 import com.kodilla.savings.domain.CurrencyTransaction;
 import com.kodilla.savings.domain.dto.nbp.RatesDto;
 import com.kodilla.savings.domain.enums.Currency;
+import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.NbpApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +68,7 @@ public class CurrencyController {
         currencyTransactionDbService.buyCurrency(accountValue.negate(), currencyCode, currencyValue);
         currencyBalanceDbService.updateCurrencyBalance(currencyCode, currencyValue);
         accountBalanceDbService.updateAccountBalance(accountValue.negate());
-        accountDepositDbService.addDeposit(accountValue.negate());
+        accountDepositDbService.addDeposit(accountValue.negate(), DepositType.CURRENCY);
     }
 
     @PostMapping(value = "/sell")
@@ -76,6 +77,6 @@ public class CurrencyController {
         currencyTransactionDbService.sellCurrency(accountValue, currencyCode, currencyValue.negate());
         currencyBalanceDbService.updateCurrencyBalance(currencyCode, currencyValue.negate());
         accountBalanceDbService.updateAccountBalance(accountValue);
-        accountDepositDbService.addDeposit(accountValue);
+        accountDepositDbService.addDeposit(accountValue, DepositType.CURRENCY);
     }
 }
