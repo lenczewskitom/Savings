@@ -48,7 +48,7 @@ public class CryptoController {
     }
 
     @GetMapping(value = "/ratesList")
-    public List<CryptoRates> getAllCurrencyRates() {
+    public List<CryptoRates> getAllCryptoRates() {
         return cryptoRatesDbService.getAllCryptoRates();
     }
 

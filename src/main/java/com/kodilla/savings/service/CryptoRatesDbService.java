@@ -8,6 +8,7 @@ import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.repository.CryptoRatesRepository;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,6 +28,7 @@ public class CryptoRatesDbService {
         return cryptoRatesRepository.getLastCryptoRatesList();
     }
 
+    @Cacheable(cacheNames = "CryptoRates")
     public List<CryptoRates> getAllCryptoRates() {
         List<CryptoRates> cryptoRatesList = new ArrayList<>();
         cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.BTC));
