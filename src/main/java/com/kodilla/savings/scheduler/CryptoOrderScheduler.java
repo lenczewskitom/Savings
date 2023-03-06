@@ -2,7 +2,6 @@ package com.kodilla.savings.scheduler;
 
 import com.kodilla.savings.config.AdminConfig;
 import com.kodilla.savings.domain.CryptoOrder;
-import com.kodilla.savings.domain.Mail;
 import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.exception.NotEnoughCryptoException;
 import com.kodilla.savings.exception.NotEnoughMoneyException;
@@ -25,7 +24,6 @@ public class CryptoOrderScheduler {
     private final CryptoBalanceDbService cryptoBalanceDbService;
     private final AccountDepositDbService accountDepositDbService;
     private final AccountBalanceDbService accountBalanceDbService;
-    //private final SimpleEmailService simpleEmailService;
     private final AdminConfig adminConfig;
 
     @Scheduled(cron = "0 */1 * * * *")

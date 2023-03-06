@@ -25,7 +25,6 @@ public class CurrencyOrderScheduler {
     private final CurrencyBalanceDbService currencyBalanceDbService;
     private final AccountDepositDbService accountDepositDbService;
     private final AccountBalanceDbService accountBalanceDbService;
-    //private final SimpleEmailService simpleEmailService;
     private final AdminConfig adminConfig;
 
     @Scheduled(cron = "0 */1 * * * *")
