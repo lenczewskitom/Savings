@@ -10,14 +10,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class SimpleEmailService {
-    private JavaMailSender javaMailSender;
-
-    @Autowired
-    public SimpleEmailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
+    private final JavaMailSender javaMailSender;
 
     public void send(final Mail mail) {
         try {
