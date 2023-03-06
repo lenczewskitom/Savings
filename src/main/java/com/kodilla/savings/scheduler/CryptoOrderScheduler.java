@@ -26,7 +26,7 @@ public class CryptoOrderScheduler {
     private final CryptoBalanceDbService cryptoBalanceDbService;
     private final AccountDepositDbService accountDepositDbService;
     private final AccountBalanceDbService accountBalanceDbService;
-    private final SimpleEmailService simpleEmailService;
+    //private final SimpleEmailService simpleEmailService;
     private final AdminConfig adminConfig;
 
     @Scheduled(cron = "0 */1 * * * *")
@@ -49,13 +49,13 @@ public class CryptoOrderScheduler {
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
                     accountDepositDbService.withdrawDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
                     cryptoOrderDbService.deleteCryptoOrder(order.getCryptoOrderId());
-                    simpleEmailService.send(
-                            new Mail(
-                                    adminConfig.getAdminMail(),
-                                    "Savings App - Currency Order",
-                                    "You bought " + order.getOrderCryptoValue() + " " + order.getCryptoCode()
-                            )
-                    );
+//                    simpleEmailService.send(
+//                            new Mail(
+//                                    adminConfig.getAdminMail(),
+//                                    "Savings App - Currency Order",
+//                                    "You bought " + order.getOrderCryptoValue() + " " + order.getCryptoCode()
+//                            )
+//                    );
                 }
             }
         }
@@ -75,13 +75,13 @@ public class CryptoOrderScheduler {
                     accountBalanceDbService.updateAccountBalance(accountValue);
                     accountDepositDbService.addDeposit(accountValue, DepositType.CRYPTOCURRENCY);
                     cryptoOrderDbService.deleteCryptoOrder(order.getCryptoOrderId());
-                    simpleEmailService.send(
-                            new Mail(
-                                    adminConfig.getAdminMail(),
-                                    "Savings App - Currency Order",
-                                    "You sold " + order.getOrderCryptoValue() + " " + order.getCryptoCode()
-                            )
-                    );
+//                    simpleEmailService.send(
+//                            new Mail(
+//                                    adminConfig.getAdminMail(),
+//                                    "Savings App - Currency Order",
+//                                    "You sold " + order.getOrderCryptoValue() + " " + order.getCryptoCode()
+//                            )
+//                    );
                 }
             }
         }
