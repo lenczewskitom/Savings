@@ -36,4 +36,21 @@ public class CoreConfiguration {
                 .build();
     }
 
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.mailtrap.io");
+        mailSender.setPort(2525);
+
+        mailSender.setUsername("0bc7d923bda174");
+        mailSender.setPassword("76e6576fecfcb8");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        return mailSender;
+    }
+
 }
