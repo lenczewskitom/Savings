@@ -9,7 +9,6 @@ import com.kodilla.savings.exception.NotEnoughMoneyException;
 import com.kodilla.savings.exception.notFound.CurrencyOrderNotFoundException;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.NbpApiDbService;
-import com.kodilla.savings.service.mail.SimpleEmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
