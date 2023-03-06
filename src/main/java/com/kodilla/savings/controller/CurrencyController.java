@@ -6,6 +6,8 @@ import com.kodilla.savings.domain.CurrencyTransaction;
 import com.kodilla.savings.domain.dto.nbp.RatesDto;
 import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.domain.enums.DepositType;
+import com.kodilla.savings.exception.NotEnoughCurrencyException;
+import com.kodilla.savings.exception.NotEnoughMoneyException;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.NbpApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +66,7 @@ public class CurrencyController {
 
     @PostMapping(value = "/buy")
     public void buyCurrency(@RequestParam BigDecimal accountValue, @RequestParam Currency currencyCode,
-                               @RequestParam BigDecimal currencyValue) {
+                               @RequestParam BigDecimal currencyValue) throws NotEnoughMoneyException {
         currencyTransactionDbService.buyCurrency(accountValue.negate(), currencyCode, currencyValue);
         currencyBalanceDbService.updateCurrencyBalance(currencyCode, currencyValue);
         accountBalanceDbService.updateAccountBalance(accountValue.negate());
@@ -73,7 +75,7 @@ public class CurrencyController {
 
     @PostMapping(value = "/sell")
     public void sellCurrency(@RequestParam BigDecimal accountValue, @RequestParam Currency currencyCode,
-                             @RequestParam BigDecimal currencyValue) {
+                             @RequestParam BigDecimal currencyValue) throws NotEnoughCurrencyException {
         currencyTransactionDbService.sellCurrency(accountValue, currencyCode, currencyValue.negate());
         currencyBalanceDbService.updateCurrencyBalance(currencyCode, currencyValue.negate());
         accountBalanceDbService.updateAccountBalance(accountValue);

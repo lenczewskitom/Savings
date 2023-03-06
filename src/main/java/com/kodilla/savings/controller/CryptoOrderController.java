@@ -4,6 +4,7 @@ import com.kodilla.savings.domain.CryptoOrder;
 import com.kodilla.savings.domain.CurrencyOrder;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Order;
+import com.kodilla.savings.exception.notFound.CryptoOrderNotFoundException;
 import com.kodilla.savings.service.CryptoOrderDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class CryptoOrderController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteCurrencyOrder(@PathVariable Long id) {
+    public void deleteCurrencyOrder(@PathVariable Long id) throws CryptoOrderNotFoundException {
         cryptoOrderDbService.deleteCryptoOrder(id);
     }
 }

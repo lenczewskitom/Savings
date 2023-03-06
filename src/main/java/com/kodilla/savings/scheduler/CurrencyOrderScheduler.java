@@ -2,6 +2,9 @@ package com.kodilla.savings.scheduler;
 
 import com.kodilla.savings.domain.CurrencyOrder;
 import com.kodilla.savings.domain.enums.DepositType;
+import com.kodilla.savings.exception.NotEnoughCurrencyException;
+import com.kodilla.savings.exception.NotEnoughMoneyException;
+import com.kodilla.savings.exception.notFound.CurrencyOrderNotFoundException;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.NbpApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +25,12 @@ public class CurrencyOrderScheduler {
     private final AccountBalanceDbService accountBalanceDbService;
 
     @Scheduled(cron = "0 */1 * * * *")
-    public void checkCurrencyOrders() {
+    public void checkCurrencyOrders() throws CurrencyOrderNotFoundException, NotEnoughMoneyException, NotEnoughCurrencyException {
         checkBuyCurrencyOrders();
         checkSellCurrencyOrders();
     }
 
-    public void checkBuyCurrencyOrders() {
+    public void checkBuyCurrencyOrders() throws CurrencyOrderNotFoundException, NotEnoughMoneyException {
         if (!currencyOrderDbService.getBuyCurrencyOrders().isEmpty()) {
             for(CurrencyOrder order : currencyOrderDbService.getBuyCurrencyOrders()) {
                 if (nbpApiDbService.getRates(order.getCurrencyCode()).getRate().compareTo(order.getCurrencyRate()) == -1) {
@@ -46,12 +49,12 @@ public class CurrencyOrderScheduler {
         }
     }
 
-    public void checkSellCurrencyOrders() {
+    public void checkSellCurrencyOrders() throws CurrencyOrderNotFoundException, NotEnoughCurrencyException {
         if (!currencyOrderDbService.getSellCurrencyOrders().isEmpty()) {
             for(CurrencyOrder order : currencyOrderDbService.getSellCurrencyOrders()) {
                 if (nbpApiDbService.getRates(order.getCurrencyCode()).getRate().compareTo(order.getCurrencyRate()) == 1) {
                     BigDecimal accountValue = order.getOrderCurrencyValue().multiply(nbpApiDbService.getRates(order.getCurrencyCode()).getRate());
-                    currencyTransactionDbService.buyCurrency(
+                    currencyTransactionDbService.sellCurrency(
                             accountValue,
                             order.getCurrencyCode(),
                             order.getOrderCurrencyValue().negate()

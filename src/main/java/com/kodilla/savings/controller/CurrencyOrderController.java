@@ -3,6 +3,7 @@ package com.kodilla.savings.controller;
 import com.kodilla.savings.domain.CurrencyOrder;
 import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.domain.enums.Order;
+import com.kodilla.savings.exception.notFound.CurrencyOrderNotFoundException;
 import com.kodilla.savings.service.CurrencyOrderDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class CurrencyOrderController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteCurrencyOrder(@PathVariable Long id) {
+    public void deleteCurrencyOrder(@PathVariable Long id) throws CurrencyOrderNotFoundException {
         currencyOrderDbService.deleteCurrencyOrder(id);
     }
 }

@@ -5,6 +5,7 @@ import com.kodilla.savings.domain.CurrencyOrder;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.domain.enums.Order;
+import com.kodilla.savings.exception.notFound.CurrencyOrderNotFoundException;
 import com.kodilla.savings.repository.CurrencyOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class CurrencyOrderDbService {
         currencyOrderRepository.save(new CurrencyOrder(currencyValue, currencyCode, currencyRate, operationType));
     }
 
-    public void deleteCurrencyOrder(Long id) {
+    public void deleteCurrencyOrder(Long id) throws CurrencyOrderNotFoundException {
+        currencyOrderRepository.findById(id).orElseThrow(CurrencyOrderNotFoundException::new);
         currencyOrderRepository.deleteById(id);
     }
 

@@ -3,6 +3,7 @@ package com.kodilla.savings.service;
 import com.kodilla.savings.domain.CryptoOrder;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Order;
+import com.kodilla.savings.exception.notFound.CryptoOrderNotFoundException;
 import com.kodilla.savings.repository.CryptoOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,8 @@ public class CryptoOrderDbService {
         cryptoOrderRepository.save(new CryptoOrder(cryptoValue, cryptoCode, cryptoRate, operationType));
     }
 
-    public void deleteCryptoOrder(Long id) {
+    public void deleteCryptoOrder(Long id) throws CryptoOrderNotFoundException {
+        cryptoOrderRepository.findById(id).orElseThrow(CryptoOrderNotFoundException::new);
         cryptoOrderRepository.deleteById(id);
     }
 

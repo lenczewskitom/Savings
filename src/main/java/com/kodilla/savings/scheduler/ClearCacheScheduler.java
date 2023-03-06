@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class ClearCacheScheduler {
 
     @CacheEvict(cacheNames = "CryptoRates", allEntries = true)
-    @Scheduled(cron = "0 */15 * * * *")
+    @Scheduled(cron = "0 */20 * * * *")
     public void emptyAllCurrencyTransactionsCache() {
         System.out.println("CryptoRates cache cleared");
     }

@@ -4,6 +4,8 @@ import com.kodilla.savings.domain.*;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
 import com.kodilla.savings.domain.enums.DepositType;
+import com.kodilla.savings.exception.NotEnoughCryptoException;
+import com.kodilla.savings.exception.NotEnoughMoneyException;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +67,7 @@ public class CryptoController {
 
     @PostMapping(value = "/buy")
     public void buyCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
-                            @RequestParam BigDecimal cryptocurrencyValue) {
+                            @RequestParam BigDecimal cryptocurrencyValue) throws NotEnoughMoneyException {
         cryptoTransactionDbService.buyCryptocurrency(accountValue.negate(), cryptoCurrencyCode, cryptocurrencyValue);
         cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue);
         accountBalanceDbService.updateAccountBalance(accountValue.negate());
@@ -74,7 +76,7 @@ public class CryptoController {
 
     @PostMapping(value = "/sell")
     public void sellCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
-                                   @RequestParam BigDecimal cryptocurrencyValue) {
+                                   @RequestParam BigDecimal cryptocurrencyValue) throws NotEnoughCryptoException {
         cryptoTransactionDbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue.negate());
         cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue.negate());
         accountBalanceDbService.updateAccountBalance(accountValue);
