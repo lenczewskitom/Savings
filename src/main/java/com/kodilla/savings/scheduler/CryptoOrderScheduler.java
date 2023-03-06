@@ -26,7 +26,7 @@ public class CryptoOrderScheduler {
     private final AccountBalanceDbService accountBalanceDbService;
     private final AdminConfig adminConfig;
 
-    @Scheduled(cron = "0 * */1 * * *")
+    @Scheduled(cron = "0 0 */1 * * *")
     public void checkCryptoOrders() throws CryptoOrderNotFoundException, NotEnoughMoneyException, NotEnoughCryptoException {
         checkBuyCryptoOrders();
         checkSellCryptoOrders();
