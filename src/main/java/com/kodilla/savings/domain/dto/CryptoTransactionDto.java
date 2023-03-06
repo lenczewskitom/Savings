@@ -13,6 +13,6 @@ public class CryptoTransactionDto {
     private long transactionId;
     private LocalDate transactionDate;
     private BigDecimal transactionAccountValue;
-    private CryptoCurrency cryptocurrencyCode;
-    private BigDecimal transactionCryptocurrencyValue;
+    private CryptoCurrency cryptoCurrencyCode;
+    private BigDecimal transactionCryptoValue;
 }

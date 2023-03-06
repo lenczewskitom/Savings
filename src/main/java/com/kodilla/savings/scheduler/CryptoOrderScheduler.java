@@ -42,7 +42,7 @@ public class CryptoOrderScheduler {
                     );
                     cryptoBalanceDbService.updateCryptoBalance(order.getCryptoCode(), order.getOrderCryptoValue());
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
-                    accountDepositDbService.addDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
+                    accountDepositDbService.withdrawDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
                     cryptoOrderDbService.deleteCryptoOrder(order.getCryptoOrderId());
                 }
             }

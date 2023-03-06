@@ -42,7 +42,7 @@ public class CurrencyOrderScheduler {
                     );
                     currencyBalanceDbService.updateCurrencyBalance(order.getCurrencyCode(), order.getOrderCurrencyValue());
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
-                    accountDepositDbService.addDeposit(accountValue.negate(), DepositType.CURRENCY);
+                    accountDepositDbService.withdrawDeposit(accountValue.negate(), DepositType.CURRENCY);
                     currencyOrderDbService.deleteCurrencyOrder(order.getCurrencyOrderId());
                 }
             }

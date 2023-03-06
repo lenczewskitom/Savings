@@ -29,7 +29,7 @@ public class CryptoTransactionDbService {
     @CacheEvict(cacheNames = "AllCryptoTransactions", allEntries = true)
     public void buyCryptocurrency(BigDecimal accountValue, CryptoCurrency cryptoCurrencyCode,
                                   BigDecimal cryptocurrencyValue) throws NotEnoughMoneyException {
-        if (accountValue.compareTo(accountBalanceDbService.getAccountBalance().getBalance()) > 0) {
+        if (accountValue.abs().compareTo(accountBalanceDbService.getAccountBalance().getBalance()) > 0) {
             throw new NotEnoughMoneyException();
         } else {
             CryptoTransaction cryptoTransaction = new CryptoTransaction(accountValue, cryptoCurrencyCode, cryptocurrencyValue);
@@ -40,7 +40,7 @@ public class CryptoTransactionDbService {
     @CacheEvict(cacheNames = "AllCryptoTransactions", allEntries = true)
     public void sellCryptocurrency(BigDecimal accountValue, CryptoCurrency cryptoCurrencyCode,
                                   BigDecimal cryptocurrencyValue) throws NotEnoughCryptoException {
-        if (cryptocurrencyValue.compareTo(cryptoBalanceDbService.getCryptoBalance(cryptoCurrencyCode).getBalance()) > 0) {
+        if (cryptocurrencyValue.abs().compareTo(cryptoBalanceDbService.getCryptoBalance(cryptoCurrencyCode).getBalance()) > 0) {
             throw new NotEnoughCryptoException();
         } else {
             CryptoTransaction cryptoTransaction = new CryptoTransaction(accountValue, cryptoCurrencyCode, cryptocurrencyValue);

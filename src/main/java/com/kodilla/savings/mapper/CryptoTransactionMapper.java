@@ -15,8 +15,8 @@ public class CryptoTransactionMapper {
                 cryptoTransactionDto.getTransactionId(),
                 cryptoTransactionDto.getTransactionDate(),
                 cryptoTransactionDto.getTransactionAccountValue(),
-                cryptoTransactionDto.getCryptocurrencyCode(),
-                cryptoTransactionDto.getTransactionCryptocurrencyValue()
+                cryptoTransactionDto.getCryptoCurrencyCode(),
+                cryptoTransactionDto.getTransactionCryptoValue()
         );
     }
 

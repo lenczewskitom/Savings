@@ -29,7 +29,7 @@ public class CurrencyTransactionDbService {
     @CacheEvict(cacheNames = "AllCurrencyTransactions", allEntries = true)
     public void buyCurrency(BigDecimal accountValue, Currency currencyCode,
                             BigDecimal currencyValue) throws NotEnoughMoneyException {
-        if (accountValue.compareTo(accountBalanceDbService.getAccountBalance().getBalance()) > 0) {
+        if (accountValue.abs().compareTo(accountBalanceDbService.getAccountBalance().getBalance()) > 0) {
             throw new NotEnoughMoneyException();
         } else {
             CurrencyTransaction currencyTransaction = new CurrencyTransaction(accountValue, currencyCode, currencyValue);
@@ -40,7 +40,7 @@ public class CurrencyTransactionDbService {
     @CacheEvict(cacheNames = "AllCurrencyTransactions", allEntries = true)
     public void sellCurrency(BigDecimal accountValue, Currency currencyCode,
                             BigDecimal currencyValue) throws NotEnoughCurrencyException {
-        if (currencyValue.compareTo(currencyBalanceDbService.getCurrencyBalance(currencyCode).getBalance()) > 0) {
+        if (currencyValue.abs().compareTo(currencyBalanceDbService.getCurrencyBalance(currencyCode).getBalance()) > 0) {
             throw new NotEnoughCurrencyException();
         } else {
             CurrencyTransaction currencyTransaction = new CurrencyTransaction(accountValue, currencyCode, currencyValue);

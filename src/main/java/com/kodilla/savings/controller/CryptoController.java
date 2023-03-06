@@ -1,14 +1,22 @@
 package com.kodilla.savings.controller;
 
 import com.kodilla.savings.domain.*;
+import com.kodilla.savings.domain.dto.CryptoBalanceDto;
+import com.kodilla.savings.domain.dto.CryptoRatesDto;
+import com.kodilla.savings.domain.dto.CryptoTransactionDto;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
 import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.exception.NotEnoughCryptoException;
 import com.kodilla.savings.exception.NotEnoughMoneyException;
+import com.kodilla.savings.mapper.CryptoBalanceMapper;
+import com.kodilla.savings.mapper.CryptoRatesMapper;
+import com.kodilla.savings.mapper.CryptoTransactionMapper;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -23,63 +31,64 @@ public class CryptoController {
     private final CryptoTransactionDbService cryptoTransactionDbService;
     private final AccountBalanceDbService accountBalanceDbService;
     private final AccountDepositDbService accountDepositDbService;
-    private final CryptoRatesDbService cryptoRatesDbService;
     private final CoinApiDbService coinApiDbService;
+    private final CryptoBalanceMapper cryptoBalanceMapper;
+    private final CryptoTransactionMapper cryptoTransactionMapper;
 
     @GetMapping(value = "/rate/{cryptoCurrencyCode}")
-    public CoinApiResponseDto getRate(@PathVariable CryptoCurrency cryptoCurrencyCode) {
-
-        return coinApiDbService.getCryptoRates(cryptoCurrencyCode);
+    public ResponseEntity<CoinApiResponseDto> getRate(@PathVariable CryptoCurrency cryptoCurrencyCode) {
+        CoinApiResponseDto coinApiResponseDto = coinApiDbService.getCryptoRates(cryptoCurrencyCode);
+        return new ResponseEntity<>(coinApiResponseDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/data")
-    public String addData() {
-        String str = "Ok";
+    public ResponseEntity<Void> addData() {
         cryptoBalanceDbService.addData();
-        return str;
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/balance/{cryptoCurrencyCode}")
-    public CryptoBalance getCryptoBalance(@PathVariable CryptoCurrency cryptoCurrencyCode) {
-        return cryptoBalanceDbService.getCryptoBalance(cryptoCurrencyCode);
+    public ResponseEntity<CryptoBalanceDto> getCryptoBalance(@PathVariable CryptoCurrency cryptoCurrencyCode) {
+        CryptoBalance cryptoBalance = cryptoBalanceDbService.getCryptoBalance(cryptoCurrencyCode);
+        return new ResponseEntity<>(cryptoBalanceMapper.mapToCryptoBalanceDto(cryptoBalance), HttpStatus.OK);
     }
 
     @GetMapping(value = "/balanceList")
-    public List<CryptoBalance> getBalance() {
-        return cryptoBalanceDbService.getAllCuryptoBalanceList();
+    public ResponseEntity<List<CryptoBalanceDto>> getBalance() {
+        List<CryptoBalance> cryptoBalanceDtoList = cryptoBalanceDbService.getAllCuryptoBalanceList();
+        return new ResponseEntity<>(cryptoBalanceMapper.mapToCryptotBalanceDtoList(cryptoBalanceDtoList), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ratesList")
-    public List<CryptoRates> getAllCryptoRates() {
-        return cryptoRatesDbService.getAllCryptoRates();
-    }
 
     @GetMapping(value = "/transactions")
-    public List<CryptoTransaction> getAllTransactions() {
-
-        return cryptoTransactionDbService.getAllTransactions();
+    public ResponseEntity<List<CryptoTransactionDto>> getAllTransactions() {
+        List<CryptoTransaction> cryptoTransactions = cryptoTransactionDbService.getAllTransactions();
+        return new ResponseEntity<>(cryptoTransactionMapper.mapToCryptoTransactionDtoList(cryptoTransactions), HttpStatus.OK);
     }
 
     @GetMapping(value = "/all")
-    public BigDecimal getAllSavings() {
-        return cryptoBalanceDbService.getAllSavings();
+    public ResponseEntity<BigDecimal> getAllSavings() {
+        BigDecimal savings = cryptoBalanceDbService.getAllSavings();
+        return new ResponseEntity<>(savings, HttpStatus.OK);
     }
 
     @PostMapping(value = "/buy")
-    public void buyCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
+    public ResponseEntity<Void> buyCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
                             @RequestParam BigDecimal cryptocurrencyValue) throws NotEnoughMoneyException {
         cryptoTransactionDbService.buyCryptocurrency(accountValue.negate(), cryptoCurrencyCode, cryptocurrencyValue);
         cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue);
         accountBalanceDbService.updateAccountBalance(accountValue.negate());
-        accountDepositDbService.addDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
+        accountDepositDbService.withdrawDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/sell")
-    public void sellCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
+    public ResponseEntity<Void> sellCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
                                    @RequestParam BigDecimal cryptocurrencyValue) throws NotEnoughCryptoException {
         cryptoTransactionDbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue.negate());
         cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue.negate());
         accountBalanceDbService.updateAccountBalance(accountValue);
         accountDepositDbService.addDeposit(accountValue, DepositType.CRYPTOCURRENCY);
+        return ResponseEntity.ok().build();
     }
 }
