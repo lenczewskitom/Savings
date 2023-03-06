@@ -22,4 +22,8 @@ public class AccountBalanceDbService {
         AccountBalance accountBalance = new AccountBalance(newBalance);
         accountBalanceRepository.save(accountBalance);
     }
+
+    public void addData() {
+        accountBalanceRepository.save(new AccountBalance(BigDecimal.ZERO));
+    }
 }
