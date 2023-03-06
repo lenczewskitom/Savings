@@ -12,7 +12,6 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import org.springframework.beans.factory.annotation.Value;
 
 
 import java.util.Properties;
@@ -23,10 +22,6 @@ import java.util.Properties;
 @EnableSwagger2
 public class CoreConfiguration {
 
-    @Value("${MAIL_USERNAME}")
-    private String usernameMail;
-    @Value("${MAIL_PASSWORD}")
-    private String usernamePassword;
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
@@ -41,21 +36,4 @@ public class CoreConfiguration {
                 .build();
     }
 
-    @Bean
-    public JavaMailSender getJavaMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.mailtrap.io");
-        mailSender.setPort(2525);
-
-        mailSender.setUsername(usernameMail);
-        mailSender.setPassword(usernamePassword);
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-
-        return mailSender;
-    }
 }
