@@ -1,12 +1,15 @@
 package com.kodilla.savings.scheduler;
 
+import com.kodilla.savings.config.AdminConfig;
 import com.kodilla.savings.domain.CurrencyOrder;
+import com.kodilla.savings.domain.Mail;
 import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.exception.NotEnoughCurrencyException;
 import com.kodilla.savings.exception.NotEnoughMoneyException;
 import com.kodilla.savings.exception.notFound.CurrencyOrderNotFoundException;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.NbpApiDbService;
+import com.kodilla.savings.service.mail.SimpleEmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,8 @@ public class CurrencyOrderScheduler {
     private final CurrencyBalanceDbService currencyBalanceDbService;
     private final AccountDepositDbService accountDepositDbService;
     private final AccountBalanceDbService accountBalanceDbService;
+    private final SimpleEmailService simpleEmailService;
+    private final AdminConfig adminConfig;
 
     @Scheduled(cron = "0 */1 * * * *")
     public void checkCurrencyOrders() throws CurrencyOrderNotFoundException, NotEnoughMoneyException, NotEnoughCurrencyException {
@@ -44,6 +49,13 @@ public class CurrencyOrderScheduler {
                     accountBalanceDbService.updateAccountBalance(accountValue.negate());
                     accountDepositDbService.withdrawDeposit(accountValue.negate(), DepositType.CURRENCY);
                     currencyOrderDbService.deleteCurrencyOrder(order.getCurrencyOrderId());
+                    simpleEmailService.send(
+                            new Mail(
+                                    adminConfig.getAdminMail(),
+                                    "Savings App - Currency Order",
+                                    "You bought " + order.getOrderCurrencyValue() + " " + order.getCurrencyCode()
+                            )
+                    );
                 }
             }
         }
@@ -63,6 +75,13 @@ public class CurrencyOrderScheduler {
                     accountBalanceDbService.updateAccountBalance(accountValue);
                     accountDepositDbService.addDeposit(accountValue, DepositType.CURRENCY);
                     currencyOrderDbService.deleteCurrencyOrder(order.getCurrencyOrderId());
+                    simpleEmailService.send(
+                            new Mail(
+                                    adminConfig.getAdminMail(),
+                                    "Savings App - Currency Order",
+                                    "You sold " + order.getOrderCurrencyValue() + " " + order.getCurrencyCode()
+                            )
+                    );
                 }
             }
         }
