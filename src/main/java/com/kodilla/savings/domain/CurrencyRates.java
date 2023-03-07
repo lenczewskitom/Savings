@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CurrencyRates")
 public class CurrencyRates {
 
     public CurrencyRates(BigDecimal lastRate, BigDecimal rateChange, Currency currencyCode) {

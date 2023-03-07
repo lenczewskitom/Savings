@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "AccountDeposit")
 public class AccountDeposit {
 
     public AccountDeposit(BigDecimal depositValue, DepositType depositType) {

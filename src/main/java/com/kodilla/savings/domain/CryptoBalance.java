@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CryptoBalance")
 public class CryptoBalance {
 
     public CryptoBalance(BigDecimal balance, CryptoCurrency cryptocurrencyCode) {

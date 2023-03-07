@@ -26,7 +26,7 @@ import org.hibernate.annotations.NamedQuery;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CurrencyOrder")
 public class CurrencyOrder {
 
     public CurrencyOrder(BigDecimal orderCurrencyValue, Currency currencyCode, BigDecimal currencyRate, Order operationType) {

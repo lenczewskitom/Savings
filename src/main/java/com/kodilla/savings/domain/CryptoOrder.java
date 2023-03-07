@@ -24,7 +24,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CryptoOrder")
 public class CryptoOrder {
 
     public CryptoOrder(BigDecimal orderCryptoValue, CryptoCurrency cryptoCode, BigDecimal cryptoRate, Order operationType) {

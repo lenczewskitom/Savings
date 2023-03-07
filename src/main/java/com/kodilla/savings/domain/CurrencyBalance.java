@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CurrencyBalance")
 public class CurrencyBalance {
 
     public CurrencyBalance(BigDecimal balance, Currency currencyCode) {

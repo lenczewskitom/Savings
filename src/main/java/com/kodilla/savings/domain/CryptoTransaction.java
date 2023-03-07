@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CryptoTransaction")
 public class CryptoTransaction {
 
     public CryptoTransaction(BigDecimal transactionAccountValue, CryptoCurrency cryptoCurrencyCode, BigDecimal transactionCryptoValue) {

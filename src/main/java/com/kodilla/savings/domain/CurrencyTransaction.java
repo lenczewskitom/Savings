@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CurrencyTransaction")
 public class CurrencyTransaction {
 
     public CurrencyTransaction(BigDecimal transactionAccountValue, Currency currencyCode, BigDecimal transactionCurrencyValue) {

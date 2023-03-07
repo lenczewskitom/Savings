@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "CryptoRates")
 public class CryptoRates {
 
     public CryptoRates(BigDecimal lastRate, BigDecimal rateChange, CryptoCurrency cryptocurrencyCode) {
