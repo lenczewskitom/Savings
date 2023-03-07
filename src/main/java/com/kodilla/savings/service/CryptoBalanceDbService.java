@@ -55,15 +55,15 @@ public class CryptoBalanceDbService {
     }
 
     public BigDecimal getAllSavings() {
-        BigDecimal btc = cryptoBalanceRepository.getCryptoBalance(Currency.EUR.name()).getBalance()
+        BigDecimal btc = cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.BTC.name()).getBalance()
                 .multiply(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate());
-        BigDecimal etc = cryptoBalanceRepository.getCryptoBalance(Currency.USD.name()).getBalance()
+        BigDecimal etc = cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.ETC.name()).getBalance()
                 .multiply(coinApiDbService.getCryptoRates(CryptoCurrency.ETC).getRate());
-        BigDecimal ltc = cryptoBalanceRepository.getCryptoBalance(Currency.GBP.name()).getBalance()
+        BigDecimal ltc = cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.LTC.name()).getBalance()
                 .multiply(coinApiDbService.getCryptoRates(CryptoCurrency.LTC).getRate());
-        BigDecimal sol = cryptoBalanceRepository.getCryptoBalance(Currency.CHF.name()).getBalance()
+        BigDecimal sol = cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.SOL.name()).getBalance()
                 .multiply(coinApiDbService.getCryptoRates(CryptoCurrency.SOL).getRate());
-        BigDecimal doge = cryptoBalanceRepository.getCryptoBalance(Currency.CNY.name()).getBalance()
+        BigDecimal doge = cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.DOGE.name()).getBalance()
                 .multiply(coinApiDbService.getCryptoRates(CryptoCurrency.DOGE).getRate());
         return btc.add(etc).add(ltc).add(sol).add(doge);
     }
