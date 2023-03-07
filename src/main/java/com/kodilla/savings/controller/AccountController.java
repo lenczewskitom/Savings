@@ -49,7 +49,7 @@ public class AccountController {
 
     @PostMapping(value = "/withdraw")
     public ResponseEntity<Void> withdrawDeposit(@RequestParam BigDecimal deposit) throws NotEnoughMoneyException {
-        accountDepositDbService.withdrawDeposit(deposit, DepositType.ACCOUNT);
+        accountDepositDbService.withdrawDeposit(deposit.negate(), DepositType.ACCOUNT);
         accountBalanceDbService.updateAccountBalance(deposit.negate());
         return ResponseEntity.ok().build();
     }
