@@ -28,7 +28,7 @@ public class CryptoRatesDbService {
         return cryptoRatesRepository.getLastCryptoRatesList();
     }
 
-    @Cacheable(cacheNames = "CryptoRates")
+    @Cacheable(cacheNames = "AllCryptoRates")
     public List<CryptoRates> getAllCryptoRates() {
         List<CryptoRates> cryptoRatesList = new ArrayList<>();
         cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.BTC));
