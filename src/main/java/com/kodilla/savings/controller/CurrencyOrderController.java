@@ -23,7 +23,7 @@ public class CurrencyOrderController {
     private final CurrencyOrderDbService currencyOrderDbService;
     private final CurrencyOrderMapper currencyOrderMapper;
 
-    @GetMapping
+    @GetMapping("/allOrders")
     public ResponseEntity<List<CurrencyOrderDto>> getAllCurrencyOrders() {
         List<CurrencyOrder> currencyOrders = currencyOrderDbService.getAllCurrencyOrders();
         return new ResponseEntity<>(currencyOrderMapper.mapToCurrencyOrderDtoList(currencyOrders), HttpStatus.OK);
@@ -41,7 +41,7 @@ public class CurrencyOrderController {
         return new ResponseEntity<>(value, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/addOrder")
     public ResponseEntity<Void> addCurrencyOrder(@RequestParam BigDecimal currencyValue, @RequestParam Currency currencyCode,
                                  @RequestParam BigDecimal currencyRate, @RequestParam Order operationType) {
         currencyOrderDbService.addCurrencyOrder(currencyValue, currencyCode, currencyRate, operationType);

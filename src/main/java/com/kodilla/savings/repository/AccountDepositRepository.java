@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AccountDepositRepository extends CrudRepository<AccountDeposit, Long> {
 
-    @Query(nativeQuery = true)
+    @Query
     List<AccountDeposit> reverseDepositsList();
 
     @Override

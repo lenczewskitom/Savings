@@ -12,10 +12,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
-@NamedNativeQuery(
+@NamedQuery(
         name = "AccountDeposit.reverseDepositsList",
-        query = "SELECT * FROM ACCOUNT_DEPOSIT ORDER BY deposit_Id DESC",
-        resultClass = AccountDeposit.class
+        query = "from AccountDeposit ORDER BY depositId DESC"
 )
 
 @Data
