@@ -10,16 +10,6 @@ import java.util.stream.Collectors;
 @Service
 public class CryptoTransactionMapper {
 
-    public CryptoTransaction mapToCryptoTransaction(final CryptoTransactionDto cryptoTransactionDto) {
-        return new CryptoTransaction(
-                cryptoTransactionDto.getTransactionId(),
-                cryptoTransactionDto.getTransactionDate(),
-                cryptoTransactionDto.getTransactionAccountValue(),
-                cryptoTransactionDto.getCryptoCurrencyCode(),
-                cryptoTransactionDto.getTransactionCryptoValue()
-        );
-    }
-
     public CryptoTransactionDto mapToCryptoTransactionDto(final CryptoTransaction cryptoTransaction) {
         return new CryptoTransactionDto(
                 cryptoTransaction.getTransactionId(),

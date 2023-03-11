@@ -10,16 +10,6 @@ import java.util.stream.Collectors;
 @Service
 public class CurrencyTransactionMapper {
 
-    public CurrencyTransaction mapToCurrencyTransaction(final CurrencyTransactionDto currencyTransactionDto) {
-        return new CurrencyTransaction(
-                currencyTransactionDto.getTransactionId(),
-                currencyTransactionDto.getTransactionDate(),
-                currencyTransactionDto.getTransactionAccountValue(),
-                currencyTransactionDto.getCurrencyCode(),
-                currencyTransactionDto.getTransactionCurrencyValue()
-        );
-    }
-
     public CurrencyTransactionDto mapToCurrencyTransactionDto(final CurrencyTransaction currencyTransaction) {
         return new CurrencyTransactionDto(
                 currencyTransaction.getTransactionId(),

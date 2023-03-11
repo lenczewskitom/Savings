@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 public class CurrencyRatesDto {
 
     private long currencyRateId;
-    private BigDecimal rate;
     private BigDecimal lastRate;
     private BigDecimal rateChange;
     private Currency currencyCode;

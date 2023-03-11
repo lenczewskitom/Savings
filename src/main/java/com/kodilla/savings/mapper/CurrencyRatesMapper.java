@@ -12,19 +12,9 @@ import java.util.stream.Collectors;
 @Service
 public class CurrencyRatesMapper {
 
-    public CurrencyRates mapToCurrencyRates(final CurrencyRatesDto currencyRatesDto) {
-        return new CurrencyRates(
-                currencyRatesDto.getCurrencyRateId(),
-                currencyRatesDto.getLastRate(),
-                currencyRatesDto.getRateChange(),
-                currencyRatesDto.getCurrencyCode()
-        );
-    }
-
     public CurrencyRatesDto mapToCurrencyRatesDto(final CurrencyRates currencyRates) {
         return new CurrencyRatesDto(
                 currencyRates.getCurrencyRateId(),
-                currencyRates.getLastRate(),
                 currencyRates.getLastRate(),
                 currencyRates.getRateChange(),
                 currencyRates.getCurrencyCode()

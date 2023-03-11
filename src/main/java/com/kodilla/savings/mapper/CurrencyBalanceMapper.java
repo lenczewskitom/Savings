@@ -12,14 +12,6 @@ import java.util.stream.Collectors;
 @Service
 public class CurrencyBalanceMapper {
 
-    public CurrencyBalance mapToCurrencyBalance(final CurrencyBalanceDto currencyBalanceDto) {
-        return new CurrencyBalance(
-                currencyBalanceDto.getCurrencyBalanceId(),
-                currencyBalanceDto.getBalance(),
-                currencyBalanceDto.getCurrencyCode()
-        );
-    }
-
     public CurrencyBalanceDto mapToCurrencyBalanceDto(final CurrencyBalance currencyBalance) {
         return new CurrencyBalanceDto(
                 currencyBalance.getCurrencyBalanceId(),

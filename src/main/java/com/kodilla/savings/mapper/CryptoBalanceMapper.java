@@ -12,14 +12,6 @@ import java.util.stream.Collectors;
 @Service
 public class CryptoBalanceMapper {
 
-    public CryptoBalance mapToCryptoBalance(final CryptoBalanceDto cryptoBalanceDto) {
-        return new CryptoBalance(
-                cryptoBalanceDto.getCryptoBalanceId(),
-                cryptoBalanceDto.getBalance(),
-                cryptoBalanceDto.getCryptocurrencyCode()
-        );
-    }
-
     public CryptoBalanceDto mapToCryptoBalanceDto(final CryptoBalance cryptoBalance) {
         return new CryptoBalanceDto(
                 cryptoBalance.getCryptoBalanceId(),

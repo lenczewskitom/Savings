@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 public class CryptoRatesDto {
 
     private long cryptoRateId;
-    private BigDecimal rate;
     private BigDecimal lastRate;
     private BigDecimal rateChange;
     private CryptoCurrency cryptocurrencyCode;

@@ -9,14 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AccountDepositMapper {
-    public AccountDeposit mapToAccountDeposit(final AccountDepositDto accountDepositDto) {
-        return new AccountDeposit(
-                accountDepositDto.getDepositId(),
-                accountDepositDto.getDepositDate(),
-                accountDepositDto.getDepositValue(),
-                accountDepositDto.getDepositType()
-        );
-    }
+
     public AccountDepositDto mapToAccountDepositDto(final AccountDeposit accountDeposit) {
         return new AccountDepositDto(
                 accountDeposit.getDepositId(),

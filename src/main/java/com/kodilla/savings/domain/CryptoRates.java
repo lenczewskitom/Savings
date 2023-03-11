@@ -45,7 +45,6 @@ public class CryptoRates {
     @NotNull
     private long cryptoRateId;
     private BigDecimal lastRate;
-
     private BigDecimal rateChange;
     @Enumerated(EnumType.STRING)
     private CryptoCurrency cryptocurrencyCode;

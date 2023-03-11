@@ -12,19 +12,9 @@ import java.util.stream.Collectors;
 @Service
 public class CryptoRatesMapper {
 
-    public CryptoRates mapToCryptoRates(final CryptoRatesDto cryptoRatesDto) {
-        return new CryptoRates(
-                cryptoRatesDto.getCryptoRateId(),
-                cryptoRatesDto.getLastRate(),
-                cryptoRatesDto.getRateChange(),
-                cryptoRatesDto.getCryptocurrencyCode()
-        );
-    }
-
     public CryptoRatesDto mapToCryptoRatesDto(final CryptoRates cryptoRates) {
         return new CryptoRatesDto(
                 cryptoRates.getCryptoRateId(),
-                cryptoRates.getLastRate(),
                 cryptoRates.getLastRate(),
                 cryptoRates.getRateChange(),
                 cryptoRates.getCryptocurrencyCode()
