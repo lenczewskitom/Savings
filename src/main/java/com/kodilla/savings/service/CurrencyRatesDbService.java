@@ -82,18 +82,4 @@ public class CurrencyRatesDbService {
         currencyRatesRepository.save(chf);
         currencyRatesRepository.save(cny);
     }
-
-    public void addData() {
-        CurrencyRates eur = new CurrencyRates(nbpApiDbService.getRates(Currency.EUR).getRate(), BigDecimal.ZERO, Currency.EUR);
-        CurrencyRates usd = new CurrencyRates(nbpApiDbService.getRates(Currency.USD).getRate(), BigDecimal.ZERO, Currency.USD);
-        CurrencyRates gbp = new CurrencyRates(nbpApiDbService.getRates(Currency.GBP).getRate(), BigDecimal.ZERO, Currency.GBP);
-        CurrencyRates chf = new CurrencyRates(nbpApiDbService.getRates(Currency.CHF).getRate(), BigDecimal.ZERO, Currency.CHF);
-        CurrencyRates cny = new CurrencyRates(nbpApiDbService.getRates(Currency.CNY).getRate(), BigDecimal.ZERO, Currency.CNY);
-
-        currencyRatesRepository.save(eur);
-        currencyRatesRepository.save(usd);
-        currencyRatesRepository.save(gbp);
-        currencyRatesRepository.save(chf);
-        currencyRatesRepository.save(cny);
-    }
 }

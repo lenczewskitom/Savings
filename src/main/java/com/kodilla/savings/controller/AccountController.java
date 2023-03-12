@@ -53,10 +53,4 @@ public class AccountController {
         accountBalanceDbService.updateAccountBalance(deposit.negate());
         return ResponseEntity.ok().build();
     }
-
-    @GetMapping(value = "/data")
-    public ResponseEntity<Void> addData() {
-        accountBalanceDbService.addData();
-        return ResponseEntity.ok().build();
-    }
 }

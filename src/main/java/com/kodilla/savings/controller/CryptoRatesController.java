@@ -34,10 +34,4 @@ public class CryptoRatesController {
         List<CryptoRates> cryptoRatesList = cryptoRatesDbService.getAllCryptoRates();
         return new ResponseEntity<>(cryptoRatesMapper.mapToCryptotRatesDtoList(cryptoRatesList), HttpStatus.OK);
     }
-
-    @GetMapping(value = "/data")
-    public ResponseEntity<Void> addData() {
-        cryptoRatesDbService.addData();
-        return ResponseEntity.ok().build();
-    }
 }

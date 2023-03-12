@@ -17,18 +17,6 @@ public class CurrencyBalanceDbService {
 
     private final CurrencyBalanceRepository currencyBalanceRepository;
     private final NbpApiDbService nbpApiDbService;
-    public void addData() {
-        CurrencyBalance eur = new CurrencyBalance(BigDecimal.ZERO, Currency.EUR);
-        CurrencyBalance usd = new CurrencyBalance(BigDecimal.ZERO, Currency.USD);
-        CurrencyBalance gbp = new CurrencyBalance(BigDecimal.ZERO, Currency.GBP);
-        CurrencyBalance chf = new CurrencyBalance(BigDecimal.ZERO, Currency.CHF);
-        CurrencyBalance cny = new CurrencyBalance(BigDecimal.ZERO, Currency.CNY);
-        currencyBalanceRepository.save(eur);
-        currencyBalanceRepository.save(usd);
-        currencyBalanceRepository.save(gbp);
-        currencyBalanceRepository.save(chf);
-        currencyBalanceRepository.save(cny);
-    }
 
     public CurrencyBalance getCurrencyBalance(Currency currency) {
         return currencyBalanceRepository.getCurrencyBalance(currency.name());

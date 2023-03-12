@@ -41,12 +41,6 @@ public class CryptoController {
         return new ResponseEntity<>(coinApiResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/data")
-    public ResponseEntity<Void> addData() {
-        cryptoBalanceDbService.addData();
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping(value = "/balance/{cryptoCurrencyCode}")
     public ResponseEntity<CryptoBalanceDto> getCryptoBalance(@PathVariable CryptoCurrency cryptoCurrencyCode) {
         CryptoBalance cryptoBalance = cryptoBalanceDbService.getCryptoBalance(cryptoCurrencyCode);

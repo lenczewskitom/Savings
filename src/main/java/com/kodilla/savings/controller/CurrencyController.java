@@ -42,12 +42,6 @@ public class CurrencyController {
         return new ResponseEntity<>(ratesDto, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/data")
-    public ResponseEntity<Void> addData() {
-        currencyBalanceDbService.addData();
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping(value = "/balance/{currencyCode}")
     public ResponseEntity<CurrencyBalanceDto> getBalance(@PathVariable Currency currencyCode) {
         CurrencyBalance currencyBalance = currencyBalanceDbService.getCurrencyBalance(currencyCode);

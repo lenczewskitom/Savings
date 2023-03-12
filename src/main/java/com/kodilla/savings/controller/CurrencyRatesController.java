@@ -33,10 +33,4 @@ public class CurrencyRatesController {
         List<CurrencyRates> currencyRates = currencyRatesDbService.getAllCurrencyRates();
         return new ResponseEntity<>(currencyRatesMapper.mapToCurrencyRatesDtoList(currencyRates), HttpStatus.OK);
     }
-
-    @GetMapping(value = "/data")
-    public ResponseEntity<Void> addData() {
-        currencyRatesDbService.addData();
-        return ResponseEntity.ok().build();
-    }
 }
