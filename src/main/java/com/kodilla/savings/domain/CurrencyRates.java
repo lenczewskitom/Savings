@@ -45,7 +45,7 @@ public class CurrencyRates {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long currencyRateId;
     private BigDecimal lastRate;

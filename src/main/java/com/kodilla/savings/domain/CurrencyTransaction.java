@@ -29,7 +29,7 @@ public class CurrencyTransaction {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long transactionId;
     private LocalDate transactionDate;

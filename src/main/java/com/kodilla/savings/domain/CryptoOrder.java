@@ -36,7 +36,7 @@ public class CryptoOrder {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long cryptoOrderId;
     private LocalDate cryptoOrderDate;

@@ -29,7 +29,7 @@ public class CurrencyBalance {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long currencyBalanceId;
     private BigDecimal balance;

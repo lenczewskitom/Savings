@@ -38,7 +38,7 @@ public class CurrencyOrder {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long currencyOrderId;
     private LocalDate currencyOrderDate;

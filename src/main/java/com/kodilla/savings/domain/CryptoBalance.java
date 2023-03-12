@@ -31,7 +31,7 @@ public class CryptoBalance {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long cryptoBalanceId;
     private BigDecimal balance;

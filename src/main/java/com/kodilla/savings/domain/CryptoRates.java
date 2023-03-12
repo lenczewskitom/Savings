@@ -41,7 +41,7 @@ public class CryptoRates {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private long cryptoRateId;
     private BigDecimal lastRate;
