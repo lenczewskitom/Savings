@@ -4,6 +4,8 @@ import com.kodilla.savings.domain.CryptoOrder;
 import com.kodilla.savings.domain.dto.CryptoOrderDto;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Order;
+import com.kodilla.savings.exception.NotEnoughCryptoException;
+import com.kodilla.savings.exception.NotEnoughMoneyException;
 import com.kodilla.savings.exception.notFound.CryptoOrderNotFoundException;
 import com.kodilla.savings.mapper.CryptoOrderMapper;
 import com.kodilla.savings.service.CryptoOrderDbService;
@@ -43,7 +45,7 @@ public class CryptoOrderController {
 
     @PostMapping
     public ResponseEntity<Void> addCryptoOrder(@RequestParam BigDecimal cryptoValue, @RequestParam CryptoCurrency cryptoCode,
-                               @RequestParam BigDecimal cryptoRate, @RequestParam Order operationType) {
+                               @RequestParam BigDecimal cryptoRate, @RequestParam Order operationType) throws NotEnoughCryptoException, NotEnoughMoneyException {
         cryptoOrderDbService.addCryptoOrder(cryptoValue, cryptoCode, cryptoRate, operationType);
         return ResponseEntity.ok().build();
     }

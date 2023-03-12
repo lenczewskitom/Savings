@@ -3,6 +3,8 @@ package com.kodilla.savings.service;
 import com.kodilla.savings.domain.CryptoOrder;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Order;
+import com.kodilla.savings.exception.NotEnoughCryptoException;
+import com.kodilla.savings.exception.NotEnoughMoneyException;
 import com.kodilla.savings.exception.notFound.CryptoOrderNotFoundException;
 import com.kodilla.savings.repository.CryptoOrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +19,25 @@ import java.util.stream.Collectors;
 public class CryptoOrderDbService {
 
     private final CryptoOrderRepository cryptoOrderRepository;
+    private final AccountBalanceDbService accountBalanceDbService;
+    private final CryptoBalanceDbService cryptoBalanceDbService;
 
     public void addCryptoOrder(BigDecimal cryptoValue, CryptoCurrency cryptoCode,
-                               BigDecimal cryptoRate, Order operationType) {
-        cryptoOrderRepository.save(new CryptoOrder(cryptoValue, cryptoCode, cryptoRate, operationType));
+                               BigDecimal cryptoRate, Order operationType) throws NotEnoughCryptoException, NotEnoughMoneyException {
+        if (operationType == Order.BUY) {
+            BigDecimal accountValue = cryptoValue.multiply(cryptoRate).add(getAllOrdersAccountValue());
+            if (accountBalanceDbService.getAccountBalance().getBalance().compareTo(accountValue) < 0) {
+                throw new NotEnoughMoneyException();
+            } else {
+                cryptoOrderRepository.save(new CryptoOrder(cryptoValue, cryptoCode, cryptoRate, operationType));
+            }
+        } else if (operationType == Order.SELL) {
+            if (cryptoBalanceDbService.getCryptoBalance(cryptoCode).getBalance().compareTo(cryptoValue) < 0) {
+                throw new NotEnoughCryptoException();
+            } else {
+                cryptoOrderRepository.save(new CryptoOrder(cryptoValue, cryptoCode, cryptoRate, operationType));
+            }
+        }
     }
 
     public void deleteCryptoOrder(Long id) throws CryptoOrderNotFoundException {

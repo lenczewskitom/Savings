@@ -4,6 +4,8 @@ import com.kodilla.savings.domain.CurrencyOrder;
 import com.kodilla.savings.domain.dto.CurrencyOrderDto;
 import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.domain.enums.Order;
+import com.kodilla.savings.exception.NotEnoughCurrencyException;
+import com.kodilla.savings.exception.NotEnoughMoneyException;
 import com.kodilla.savings.exception.notFound.CurrencyOrderNotFoundException;
 import com.kodilla.savings.mapper.CurrencyOrderMapper;
 import com.kodilla.savings.service.CurrencyOrderDbService;
@@ -43,7 +45,7 @@ public class CurrencyOrderController {
 
     @PostMapping("/addOrder")
     public ResponseEntity<Void> addCurrencyOrder(@RequestParam BigDecimal currencyValue, @RequestParam Currency currencyCode,
-                                 @RequestParam BigDecimal currencyRate, @RequestParam Order operationType) {
+                                 @RequestParam BigDecimal currencyRate, @RequestParam Order operationType) throws NotEnoughMoneyException, NotEnoughCurrencyException {
         currencyOrderDbService.addCurrencyOrder(currencyValue, currencyCode, currencyRate, operationType);
         return ResponseEntity.ok().build();
     }
