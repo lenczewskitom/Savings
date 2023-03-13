@@ -5,6 +5,7 @@ import com.kodilla.savings.domain.CryptoRates;
 import com.kodilla.savings.domain.CurrencyRates;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Currency;
+import com.kodilla.savings.exception.TooManyRequestsException;
 import com.kodilla.savings.repository.CryptoRatesRepository;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class CryptoRatesDbService {
         return cryptoRatesRepository.getLastCryptoRatesList();
     }
 
-    @Cacheable(cacheNames = "AllCryptoRates")
-    public List<CryptoRates> getAllCryptoRates() {
+    //@Cacheable(cacheNames = "AllCryptoRates")
+    public List<CryptoRates> getAllCryptoRates() throws TooManyRequestsException {
         List<CryptoRates> cryptoRatesList = new ArrayList<>();
         cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.BTC));
         cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.ETC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.ETC));
@@ -39,7 +40,7 @@ public class CryptoRatesDbService {
         return cryptoRatesList;
     }
 
-    public void updateCryptoRates() {
+    public void updateCryptoRates() throws TooManyRequestsException {
         BigDecimal btcLastRate = cryptoRatesRepository.getLastCryptoRate(CryptoCurrency.BTC.name()).getLastRate();
         BigDecimal btcRate = coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate();
         CryptoRates btc = new CryptoRates(

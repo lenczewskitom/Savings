@@ -6,6 +6,7 @@ import com.kodilla.savings.domain.Mail;
 import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.exception.NotEnoughCryptoException;
 import com.kodilla.savings.exception.NotEnoughMoneyException;
+import com.kodilla.savings.exception.TooManyRequestsException;
 import com.kodilla.savings.exception.notFound.CryptoOrderNotFoundException;
 import com.kodilla.savings.service.*;
 import com.kodilla.savings.service.api.CoinApiDbService;
@@ -30,12 +31,12 @@ public class CryptoOrderScheduler {
     private final SimpleEmailService simpleEmailService;
 
     @Scheduled(cron = "0 */5 * * * *")
-    public void checkCryptoOrders() throws CryptoOrderNotFoundException, NotEnoughMoneyException, NotEnoughCryptoException {
+    public void checkCryptoOrders() throws CryptoOrderNotFoundException, NotEnoughMoneyException, NotEnoughCryptoException, TooManyRequestsException {
         checkBuyCryptoOrders();
         checkSellCryptoOrders();
     }
 
-    public void checkBuyCryptoOrders() throws CryptoOrderNotFoundException, NotEnoughMoneyException {
+    public void checkBuyCryptoOrders() throws CryptoOrderNotFoundException, NotEnoughMoneyException, TooManyRequestsException {
         if (!cryptoOrderDbService.getBuyCryptoOrders().isEmpty()) {
             for(CryptoOrder order : cryptoOrderDbService.getBuyCryptoOrders()) {
                 if (coinApiDbService.getCryptoRates(order.getCryptoCode()).getRate().compareTo(order.getCryptoRate()) == -1) {
@@ -61,7 +62,7 @@ public class CryptoOrderScheduler {
         }
     }
 
-    public void checkSellCryptoOrders() throws CryptoOrderNotFoundException, NotEnoughCryptoException {
+    public void checkSellCryptoOrders() throws CryptoOrderNotFoundException, NotEnoughCryptoException, TooManyRequestsException {
         if (!cryptoOrderDbService.getSellCryptoOrders().isEmpty()) {
             for(CryptoOrder order : cryptoOrderDbService.getSellCryptoOrders()) {
                 if (coinApiDbService.getCryptoRates(order.getCryptoCode()).getRate().compareTo(order.getCryptoRate()) == 1) {

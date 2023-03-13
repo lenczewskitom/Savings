@@ -1,5 +1,6 @@
 package com.kodilla.savings.scheduler;
 
+import com.kodilla.savings.exception.TooManyRequestsException;
 import com.kodilla.savings.service.CryptoRatesDbService;
 import com.kodilla.savings.service.CurrencyRatesDbService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class TopRatesScheduler {
     private final CurrencyRatesDbService currencyRatesDbService;
 
     @Scheduled(cron = "0 0 6 * * *")
-    public void getTopCryptoRates() {
+    public void getTopCryptoRates() throws TooManyRequestsException {
         cryptoRatesDbService.updateCryptoRates();
     }
 

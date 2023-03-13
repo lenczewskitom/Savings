@@ -4,6 +4,7 @@ import com.kodilla.savings.domain.CryptoBalance;
 import com.kodilla.savings.domain.CurrencyBalance;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
 import com.kodilla.savings.domain.enums.Currency;
+import com.kodilla.savings.exception.TooManyRequestsException;
 import com.kodilla.savings.repository.CryptoBalanceRepository;
 import com.kodilla.savings.service.api.CoinApiDbService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class CryptoBalanceDbService {
         cryptoBalanceRepository.save(cryptoBalance);
     }
 
-    public BigDecimal getAllSavings() {
+    public BigDecimal getAllSavings() throws TooManyRequestsException {
         BigDecimal btc = cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.BTC.name()).getBalance()
                 .multiply(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate());
         BigDecimal etc = cryptoBalanceRepository.getCryptoBalance(CryptoCurrency.ETC.name()).getBalance()

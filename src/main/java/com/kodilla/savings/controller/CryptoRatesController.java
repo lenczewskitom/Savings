@@ -2,6 +2,7 @@ package com.kodilla.savings.controller;
 
 import com.kodilla.savings.domain.CryptoRates;
 import com.kodilla.savings.domain.dto.CryptoRatesDto;
+import com.kodilla.savings.exception.TooManyRequestsException;
 import com.kodilla.savings.mapper.CryptoRatesMapper;
 import com.kodilla.savings.service.CryptoRatesDbService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class CryptoRatesController {
     }
 
     @GetMapping(value = "/ratesList")
-    public ResponseEntity<List<CryptoRatesDto>> getAllCryptoRates() {
+    public ResponseEntity<List<CryptoRatesDto>> getAllCryptoRates() throws TooManyRequestsException {
         List<CryptoRates> cryptoRatesList = cryptoRatesDbService.getAllCryptoRates();
         return new ResponseEntity<>(cryptoRatesMapper.mapToCryptotRatesDtoList(cryptoRatesList), HttpStatus.OK);
     }

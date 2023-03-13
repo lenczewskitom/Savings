@@ -9,6 +9,7 @@ import com.kodilla.savings.domain.dto.coinapi.CoinApiResponseDto;
 import com.kodilla.savings.domain.enums.DepositType;
 import com.kodilla.savings.exception.NotEnoughCryptoException;
 import com.kodilla.savings.exception.NotEnoughMoneyException;
+import com.kodilla.savings.exception.TooManyRequestsException;
 import com.kodilla.savings.mapper.CryptoBalanceMapper;
 import com.kodilla.savings.mapper.CryptoRatesMapper;
 import com.kodilla.savings.mapper.CryptoTransactionMapper;
@@ -36,7 +37,7 @@ public class CryptoController {
     private final CryptoTransactionMapper cryptoTransactionMapper;
 
     @GetMapping(value = "/rate/{cryptoCurrencyCode}")
-    public ResponseEntity<CoinApiResponseDto> getRate(@PathVariable CryptoCurrency cryptoCurrencyCode) {
+    public ResponseEntity<CoinApiResponseDto> getRate(@PathVariable CryptoCurrency cryptoCurrencyCode) throws TooManyRequestsException {
         CoinApiResponseDto coinApiResponseDto = coinApiDbService.getCryptoRates(cryptoCurrencyCode);
         return new ResponseEntity<>(coinApiResponseDto, HttpStatus.OK);
     }
@@ -61,7 +62,7 @@ public class CryptoController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<BigDecimal> getAllSavings() {
+    public ResponseEntity<BigDecimal> getAllSavings() throws TooManyRequestsException {
         BigDecimal savings = cryptoBalanceDbService.getAllSavings();
         return new ResponseEntity<>(savings, HttpStatus.OK);
     }
