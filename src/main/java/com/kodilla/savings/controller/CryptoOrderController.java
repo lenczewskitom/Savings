@@ -26,7 +26,7 @@ public class CryptoOrderController {
     private final CryptoOrderMapper cryptoOrderMapper;
 
     @GetMapping
-    public ResponseEntity<List<CryptoOrderDto>> getAllCurrencyOrders() {
+    public ResponseEntity<List<CryptoOrderDto>> getAllCryptoOrders() {
         List<CryptoOrder> cryptoOrders = cryptoOrderDbService.getAllCryptoOrders();
         return new ResponseEntity<>(cryptoOrderMapper.mapToCryptoOrderDtoList(cryptoOrders), HttpStatus.OK);
     }
