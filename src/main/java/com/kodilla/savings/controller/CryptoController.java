@@ -69,9 +69,9 @@ public class CryptoController {
 
     @PostMapping(value = "/buy")
     public ResponseEntity<Void> buyCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
-                            @RequestParam BigDecimal cryptocurrencyValue) throws NotEnoughMoneyException {
+                            @RequestParam BigDecimal cryptocurrencyValue) throws NotEnoughMoneyException, TooManyRequestsException {
         cryptoTransactionDbService.buyCryptocurrency(accountValue.negate(), cryptoCurrencyCode, cryptocurrencyValue);
-        cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue);
+        cryptoBalanceDbService.addCrypto(cryptoCurrencyCode, cryptocurrencyValue);
         accountBalanceDbService.updateAccountBalance(accountValue.negate());
         accountDepositDbService.withdrawDeposit(accountValue.negate(), DepositType.CRYPTOCURRENCY);
         return ResponseEntity.ok().build();
@@ -81,7 +81,7 @@ public class CryptoController {
     public ResponseEntity<Void> sellCryptocurrency(@RequestParam BigDecimal accountValue, @RequestParam CryptoCurrency cryptoCurrencyCode,
                                    @RequestParam BigDecimal cryptocurrencyValue) throws NotEnoughCryptoException {
         cryptoTransactionDbService.sellCryptocurrency(accountValue, cryptoCurrencyCode, cryptocurrencyValue.negate());
-        cryptoBalanceDbService.updateCryptoBalance(cryptoCurrencyCode, cryptocurrencyValue.negate());
+        cryptoBalanceDbService.withdrawCrypto(cryptoCurrencyCode, cryptocurrencyValue.negate());
         accountBalanceDbService.updateAccountBalance(accountValue);
         accountDepositDbService.addDeposit(accountValue, DepositType.CRYPTOCURRENCY);
         return ResponseEntity.ok().build();
