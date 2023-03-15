@@ -49,7 +49,7 @@ public class CurrencyController {
     }
 
     @GetMapping(value = "/balanceList")
-    public ResponseEntity<List<CurrencyBalanceDto>> getBalance() {
+    public ResponseEntity<List<CurrencyBalanceDto>> getBalanceList() {
         List<CurrencyBalance> currencyBalances = currencyBalanceDbService.getAllCurrencyBalanceList();
         return new ResponseEntity<>(currencyBalanceMapper.mapToCurrencyBalanceDtoList(currencyBalances), HttpStatus.OK);
     }
