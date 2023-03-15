@@ -1,10 +1,7 @@
 package com.kodilla.savings.service;
 
-import com.kodilla.savings.domain.CryptoBalance;
 import com.kodilla.savings.domain.CryptoRates;
-import com.kodilla.savings.domain.CurrencyRates;
 import com.kodilla.savings.domain.enums.CryptoCurrency;
-import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.exception.TooManyRequestsException;
 import com.kodilla.savings.repository.CryptoRatesRepository;
 import com.kodilla.savings.service.api.CoinApiDbService;
@@ -16,7 +13,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +25,7 @@ public class CryptoRatesDbService {
         return cryptoRatesRepository.getLastCryptoRatesList();
     }
 
-    //@Cacheable(cacheNames = "AllCryptoRates")
+    @Cacheable(cacheNames = "AllCryptoRates")
     public List<CryptoRates> getAllCryptoRates() throws TooManyRequestsException {
         List<CryptoRates> cryptoRatesList = new ArrayList<>();
         cryptoRatesList.add(new CryptoRates(coinApiDbService.getCryptoRates(CryptoCurrency.BTC).getRate().setScale(4, RoundingMode.CEILING), CryptoCurrency.BTC));

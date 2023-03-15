@@ -14,7 +14,7 @@ public class CoinApiDbService {
 
     private final CoinApiClient coinApiResponseDto;
 
-    //@Cacheable(cacheNames = "CryptoRate", key = "#cryptoCurrencyCode")
+    @Cacheable(cacheNames = "CryptoRate", key = "#cryptoCurrencyCode")
     public CoinApiResponseDto getCryptoRates(CryptoCurrency cryptoCurrencyCode) throws TooManyRequestsException {
         return coinApiResponseDto.getCryptocurrencyRates(cryptoCurrencyCode);
     }

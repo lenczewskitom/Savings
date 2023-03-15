@@ -6,6 +6,7 @@ import com.kodilla.savings.domain.CurrencyBalance;
 import com.kodilla.savings.domain.CurrencyTransaction;
 import com.kodilla.savings.domain.dto.CurrencyBalanceDto;
 import com.kodilla.savings.domain.dto.CurrencyTransactionDto;
+import com.kodilla.savings.domain.dto.nbp.RatesDto;
 import com.kodilla.savings.domain.enums.Currency;
 import com.kodilla.savings.service.AccountBalanceDbService;
 import com.kodilla.savings.service.CurrencyBalanceDbService;
@@ -53,7 +54,7 @@ public class CurrencyControllerTest {
     private CurrencyBalance currencyBalance;
     private CurrencyTransaction currencyTransaction;
     private AccountBalance accountBalance;
-
+    private RatesDto ratesDto;
     private List<CurrencyBalance> currencyBalances = new ArrayList<>();
     private List<CurrencyTransaction> currencyTransactions = new ArrayList<>();
     @BeforeAll
@@ -61,8 +62,23 @@ public class CurrencyControllerTest {
         currencyBalance = new CurrencyBalance(1L, BigDecimal.valueOf(1000), Currency.USD);
         currencyTransaction = new CurrencyTransaction(1L, LocalDate.now(), BigDecimal.valueOf(1000), Currency.USD, BigDecimal.valueOf(100));
         accountBalance = new AccountBalance(1L, BigDecimal.valueOf(2000));
+        ratesDto = new RatesDto(BigDecimal.valueOf(4.5));
         currencyTransactions.add(currencyTransaction);
         currencyBalances.add(currencyBalance);
+    }
+
+    @Test
+    void shouldGetRate() throws Exception {
+        //given
+        when(nbpApiDbService.getRates(Currency.USD)).thenReturn(ratesDto);
+        //when
+        MvcResult mvcResult = mockMvc.perform(get("/v1/currency/rate?currency=USD"))
+                .andExpect(status().is(200))
+                .andReturn();
+        //then
+        RatesDto ratesDto2 = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), RatesDto.class);
+        assertThat(ratesDto2).isNotNull();
+        assertEquals(BigDecimal.valueOf(4.5), ratesDto2.getRate());
     }
 
     @Test
