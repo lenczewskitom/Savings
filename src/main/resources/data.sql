@@ -16,15 +16,15 @@ insert into currency_balance (balance, currency_code, currency_balance_id) value
 insert into currency_balance (balance, currency_code, currency_balance_id) values (0, 'CNY', 5);
 
 --Add initial data for crypto_rates
-insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('BTC', 0, 0, 1);
-insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('ETC', 0, 0, 2);
-insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('LTC', 0, 0, 3);
-insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('SOL', 0, 0, 4);
-insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('DOGE', 0, 0, 5);
+insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('BTC', 1, 0, 1);
+insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('ETC', 1, 0, 2);
+insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('LTC', 1, 0, 3);
+insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('SOL', 1, 0, 4);
+insert into crypto_rates (cryptocurrency_code, last_rate, rate_change, crypto_rate_id) values ('DOGE', 1, 0, 5);
 
 --Add initial data for currency_rates
-insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('EUR', 0, 0, 1);
-insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('USD', 0, 0, 2);
-insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('GBP', 0, 0, 3);
-insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('CHF', 0, 0, 4);
-insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('CNY', 0, 0, 5);
+insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('EUR', 1, 0, 1);
+insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('USD', 1, 0, 2);
+insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('GBP', 1, 0, 3);
+insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('CHF', 1, 0, 4);
+insert into currency_rates (currency_code, last_rate, rate_change, currency_rate_id) values ('CNY', 1, 0, 5);

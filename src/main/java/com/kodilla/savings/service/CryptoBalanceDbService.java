@@ -50,7 +50,7 @@ public class CryptoBalanceDbService {
     }
 
     public void withdrawCrypto(CryptoCurrency cryptoCurrencyCode, BigDecimal cryptocurrencyValue) throws NotEnoughCryptoException {
-        if (getCryptoBalance(cryptoCurrencyCode).getBalance().compareTo(cryptocurrencyValue) > 0) {
+        if (getCryptoBalance(cryptoCurrencyCode).getBalance().compareTo(cryptocurrencyValue.abs()) < 0) {
             throw new NotEnoughCryptoException();
         } else {
             BigDecimal newBalance = cryptoBalanceRepository.getCryptoBalance(cryptoCurrencyCode.name()).getBalance().add(cryptocurrencyValue);
